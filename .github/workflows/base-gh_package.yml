@@ -21,6 +21,31 @@ jobs:
     if: "! contains(github.event.head_commit.message, '[ci skip]')"
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+  #https://github.com/marketplace/actions/anchore-container-scan
+  anchore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build locally the container image
+        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+      
+      - name: Scan the container image with Anchore
+        uses: anchore/scan-action@v3
+        with:
+          image: "localbuild/${{ env.IMAGE_NAME }}:latest"
+          dockerfile-path: .docker/base/base.dockerfile
+          fail-build: true
+          severity-cutoff: critical
+
+      - name: upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+  
   push_to_registry:
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
@@ -28,8 +53,6 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -44,18 +67,6 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build locally the container image
-        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
-      
-      #https://github.com/marketplace/actions/anchore-container-scan
-      - name: Scan the container image with Anchore
-        uses: anchore/scan-action@v3
-        with:
-          image: "localbuild/${{ env.IMAGE_NAME }}:latest"
-          dockerfile-path: .docker/base/base.dockerfile
-          fail-build: true
-          severity-cutoff: critical
-
       - name: Build and Push to GitHub Packages
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
@@ -64,10 +75,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Upload AnchoreReports
-        uses: actions/upload-artifact@v1.0.0
-        with:
-          name: AnchoreReports
-          path: ./anchore-reports/
-
