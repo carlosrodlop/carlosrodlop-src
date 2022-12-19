@@ -32,6 +32,7 @@ jobs:
         run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
       - name: Scan the container image with Anchore
         uses: anchore/scan-action@v3
+        id: scan
         with:
           image: "localbuild/${{ env.IMAGE_NAME }}:latest"
           dockerfile-path: .docker/base/base.dockerfile
