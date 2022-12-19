@@ -45,12 +45,13 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build locally the container image
-        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}
+        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
       
       - name: Scan the container image with Anchore
         uses: anchore/scan-action@v3
         with:
-          image: "localbuild/${{ env.IMAGE_NAME }}"
+          image: "localbuild/${{ env.IMAGE_NAME }}:latest"
+          dockerfile-path: .docker/base/base.dockerfile
           fail-build: true
 
       - name: Build and Push to GitHub Packages
@@ -61,3 +62,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Upload AnchoreReports
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: AnchoreReports
+          path: ./anchore-reports/
+
