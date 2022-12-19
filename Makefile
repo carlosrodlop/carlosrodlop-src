@@ -10,7 +10,7 @@ docker-run-devops-tools: ## Run image from Dockerfile.devops
 docker-run-devops-tools:
 	@cat $(DOCKER_SECRET) | docker login ghcr.io --username carlosrodlop --password-stdin
 	@docker run --name devops_tools -it --rm \
-        --mount type=bind,source="$(MKFILE_DIR)/src",target=/root/labs \
+        --mount type=bind,source="$(MKFILE_DIR)/forks",target=/root/labs \
         --mount type=bind,source="$(HOME)/.aws",target=/root/.aws \
         --mount type=bind,source="$(HOME)/.ssh",target=/root/.ssh \
         -v "$(MKFILE_DIR)"/.docker/devops/v_kube:/root/.kube/ \
