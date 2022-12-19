@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 AS base
+FROM ghcr.io/carlosrodlop/carlosrodlop-src.k8s:main AS base
 SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
@@ -22,5 +22,3 @@ RUN source ~/.asdf/asdf.sh && \
 
 # Place into the mount with the Project Code
 WORKDIR /root/labs
-
-ENTRYPOINT ["/bin/zsh"]

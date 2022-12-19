@@ -2,12 +2,12 @@
 SHELL           := /bin/bash
 MAKEFLAGS       += --no-print-directory
 MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-DOCKER_PACKAGE  := carlosrodlop/carlosrodlop-src.base:main
+DOCKER_REGISTRY := ghcr.io/carlosrodlop/carlosrodlop-src
 DOCKER_SECRET   := $(MKFILE_DIR)/../secrets/files/github/gh_token.txt
 
 .PHONY:
-docker-run-devops-tools: ## Run image from Dockerfile.devops
-docker-run-devops-tools:
+docker-run-tf-tools: ## Run image from Dockerfile.devops
+docker-run-tf-tools:
 	@cat $(DOCKER_SECRET) | docker login ghcr.io --username carlosrodlop --password-stdin
 	@docker run --name devops_tools -it --rm \
         --mount type=bind,source="$(MKFILE_DIR)/forks",target=/root/labs \
@@ -16,7 +16,7 @@ docker-run-devops-tools:
         -v "$(MKFILE_DIR)"/.docker/devops/v_kube:/root/.kube/ \
         -v "$(MKFILE_DIR)"/.docker/devops/v_tmp:/tmp/ \
 		--platform linux/amd64 \
-        ghcr.io/$(DOCKER_PACKAGE)
+        $(DOCKER_REGISTRY).tf:main
 
 ####################
 ## Common targets
