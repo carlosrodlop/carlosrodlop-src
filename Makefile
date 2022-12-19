@@ -1,21 +1,22 @@
-.DEFAULT_GOAL := help
-SHELL         := /bin/bash
-MAKEFLAGS     += --no-print-directory
-MKFILE_DIR    := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+.DEFAULT_GOAL   := help
+SHELL           := /bin/bash
+MAKEFLAGS       += --no-print-directory
+MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+DOCKER_PACKAGE  := carlosrodlop/carlosrodlop.devops:main
+DOCKER_SECRET   := $(MKFILE_DIR)/../secrets/files/github/gh_token.txt
 
 .PHONY:
 docker-run-devops-tools: ## Run image from Dockerfile.devops
 docker-run-devops-tools:
-	@cat src/secrets/files/github/gh_token.txt | docker login ghcr.io --username carlosrodlop --password-stdin
+	@cat $(DOCKER_SECRET) | docker login ghcr.io --username carlosrodlop --password-stdin
 	@docker run --name devops_tools -it --rm \
         --mount type=bind,source="$(MKFILE_DIR)/src",target=/root/labs \
         --mount type=bind,source="$(HOME)/.aws",target=/root/.aws \
         --mount type=bind,source="$(HOME)/.ssh",target=/root/.ssh \
         -v "$(MKFILE_DIR)"/.docker/devops/v_kube:/root/.kube/ \
         -v "$(MKFILE_DIR)"/.docker/devops/v_tmp:/tmp/ \
-        -p 8080:8080 \
 		--platform linux/amd64 \
-        ghcr.io/carlosrodlop/carlosrodlop.devops:main
+        ghcr.io/$(DOCKER_PACKAGE)
 
 ####################
 ## Common targets
