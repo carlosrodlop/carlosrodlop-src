@@ -1,4 +1,4 @@
-name: Publish DevOps Docker Image
+name: Publish Terraform Image Package
 
 # Controls when the action will run.
 on:
@@ -6,14 +6,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - .docker/devops/**
+      - .docker/terraform/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.devops
+  IMAGE_NAME: ${{ github.repository }}.tf
 
 jobs:
   check_run:
@@ -48,7 +48,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          file: .docker/devops/devops.dockerfile
+          file: .docker/base/base.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
