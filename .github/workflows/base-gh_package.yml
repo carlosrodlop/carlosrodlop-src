@@ -22,12 +22,14 @@ jobs:
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
   checkout:
+    needs: check_run
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
   #https://github.com/marketplace/actions/anchore-container-scan
   anchore:
+    needs: checkout
     runs-on: ubuntu-latest
     steps:
       - name: Build locally the container image
@@ -47,6 +49,7 @@ jobs:
           sarif_file: ${{ steps.scan.outputs.sarif }}
   
   push_to_registry:
+    needs: checkout
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
