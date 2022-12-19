@@ -2,7 +2,7 @@
 SHELL           := /bin/bash
 MAKEFLAGS       += --no-print-directory
 MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-DOCKER_PACKAGE  := carlosrodlop/carlosrodlop.devops:main
+DOCKER_PACKAGE  := carlosrodlop/carlosrodlop-src.base:main
 DOCKER_SECRET   := $(MKFILE_DIR)/../secrets/files/github/gh_token.txt
 
 .PHONY:

@@ -1,4 +1,4 @@
-name: Publish Base Image Package
+name: Publish K8s Image Package
 
 # Controls when the action will run.
 on:
@@ -6,14 +6,14 @@ on:
   push:
     branches: [ main ]
     paths:
-      - .docker/base/**
+      - .docker/k8s/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.base
+  IMAGE_NAME: ${{ github.repository }}.k8s
 
 jobs:
   check_run:
