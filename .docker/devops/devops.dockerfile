@@ -3,7 +3,7 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
     version="1.1" \
-    updated_at=2022-12-5
+    updated_at=2022-12-19
 
 # Tooling
 WORKDIR /root
@@ -55,6 +55,10 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add kubectl && \
     asdf plugin add velero && \
     asdf plugin add terraform && \
+    asdf plugin add terraform-docs && \
+    asdf plugin add terraform && \
+    asdf plugin add checkov && \
+    asdf plugin add infracost && \
     asdf plugin add kubectx && \
     asdf plugin add python && \
     asdf plugin add gcloud && \
