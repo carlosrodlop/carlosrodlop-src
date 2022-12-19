@@ -56,9 +56,8 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add velero && \
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
-    asdf plugin add terraform && \
-    asdf plugin add checkov && \
-    asdf plugin add infracost && \
+    #asdf plugin add checkov && \
+    #asdf plugin add infracost && \
     asdf plugin add kubectx && \
     asdf plugin add python && \
     asdf plugin add gcloud && \
