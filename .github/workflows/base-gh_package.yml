@@ -23,7 +23,7 @@ jobs:
       - run: echo "${{ github.event.head_commit.message }}"
   #https://github.com/marketplace/actions/anchore-container-scan
   anchore:
-    needs: checkout
+    needs: check_run
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
