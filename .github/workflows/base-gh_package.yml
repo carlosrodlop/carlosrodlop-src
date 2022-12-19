@@ -44,6 +44,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Build locally the container image
+        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}
+      
+      - uses: anchore/scan-action@v3
+        with:
+          image: "localbuild/${{ env.IMAGE_NAME }}"
+          fail-build: true
+
       - name: Build and Push to GitHub Packages
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
