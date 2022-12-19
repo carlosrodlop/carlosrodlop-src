@@ -46,6 +46,7 @@ COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
 RUN source ~/.asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add eksctl && \
+    asdf plugin add gcloud && \
     asdf plugin add helm && \
     asdf plugin add helm-diff && \
     asdf plugin add helmfile && \
@@ -56,11 +57,10 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add velero && \
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
-    #asdf plugin add checkov && \
-    #asdf plugin add infracost && \
+    asdf plugin add checkov && \
+    asdf plugin add infracost && \
     asdf plugin add kubectx && \
     asdf plugin add python && \
-    asdf plugin add gcloud && \
     asdf install && \
     helm plugin install https://github.com/komodorio/helm-dashboard.git
 
