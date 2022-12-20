@@ -6,17 +6,17 @@ DOCKER_REGISTRY := ghcr.io/carlosrodlop/carlosrodlop-src
 DOCKER_SECRET   := $(MKFILE_DIR)/../secrets/files/github/gh_token.txt
 
 .PHONY:
-docker-run-tf-tools: ## Run image from Dockerfile.devops
-docker-run-tf-tools:
+docker-run-package: ## Run the selected package passed as parameter. Usage: IMAGE=base make docker-run-package
+docker-run-package: guard-IMAGE
 	@cat $(DOCKER_SECRET) | docker login ghcr.io --username carlosrodlop --password-stdin
 	@docker run --name devops_tools -it --rm \
         --mount type=bind,source="$(MKFILE_DIR)/forks",target=/root/labs \
         --mount type=bind,source="$(HOME)/.aws",target=/root/.aws \
         --mount type=bind,source="$(HOME)/.ssh",target=/root/.ssh \
-        -v "$(MKFILE_DIR)"/.docker/devops/v_kube:/root/.kube/ \
-        -v "$(MKFILE_DIR)"/.docker/devops/v_tmp:/tmp/ \
+        -v "$(MKFILE_DIR)"/.docker/v_kube:/root/.kube/ \
+        -v "$(MKFILE_DIR)"/.docker/v_tmp:/tmp/ \
 		--platform linux/amd64 \
-        $(DOCKER_REGISTRY).tf:main
+        $(DOCKER_REGISTRY).$(IMAGE):main
 
 ####################
 ## Common targets
