@@ -44,7 +44,7 @@ kubectl top pod pod_example --container -n example_namespace #Container within a
 ## KUBERNETES EVENTS
 # Get last events
 kubectl get events --watch # watch here is like tail
-kubectl get events -n <namespace> --sort-by=.metadata.creationTimestamp
+kubectl get events -n example_namespace --sort-by=.metadata.creationTimestamp
 kubectl get events --sort-by='.lastTimestamp'
 kubectl get events -n <CB-NAMESPACE> --field-selector involvedObject.kind=Pod
 kubectl get events -n <CB-NAMESPACE> --field-selector involvedObject.name=<POD-NAME>
