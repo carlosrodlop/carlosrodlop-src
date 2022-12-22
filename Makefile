@@ -6,6 +6,11 @@ DOCKER_REGISTRY := ghcr.io/carlosrodlop/carlosrodlop-src
 DOCKER_SECRET   := $(MKFILE_DIR)/../secrets/files/github/gh_token.txt
 
 .PHONY:
+docker-sast-scan-all: ## SAST scan from https://slscan.io/en/latest/ for the root
+docker-scan-all:
+	@docker run --rm -e "WORKSPACE=$(PWD)" -v $(PWD):/app shiftleft/sast-scan scan --build
+
+.PHONY:
 docker-run-package: ## Run the selected package passed as parameter. Usage: IMAGE=base make docker-run-package
 docker-run-package: guard-IMAGE
 	@cat $(DOCKER_SECRET) | docker login ghcr.io --username carlosrodlop --password-stdin
