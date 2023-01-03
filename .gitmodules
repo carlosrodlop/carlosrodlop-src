@@ -4,3 +4,6 @@
 [submodule "forks/cb-env-demos"]
 	path = forks/cb-env-demos
 	url = git@github.com:cloudbees/ps-crodriguezlopez-env.git
+[submodule "forks/eks-labs"]
+	path = forks/eks-labs
+	url = git@github.com:carlosrodlop/eks-blueprints-labs.git
