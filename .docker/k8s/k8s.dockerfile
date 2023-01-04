@@ -12,7 +12,7 @@ ENV HD_BIND=0.0.0.0 \
     IMAGE_ROOT_PATH=.docker/k8s
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions-k8s
-RUN cat ".tool-versions-k8s" >> ~/.tool-versions
+RUN cat ".tool-versions-k8s" >> .tool-versions
 RUN source ~/.asdf/asdf.sh && \
     asdf plugin add helm && \
     asdf plugin add helm-diff && \
