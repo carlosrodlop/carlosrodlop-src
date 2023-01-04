@@ -6,12 +6,13 @@ on:
   push:
     branches: [ main ]
     paths:
-      - .docker/terraform/**
+      - .docker/tf/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
+  NAME: tf
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}.tf
 
@@ -48,7 +49,7 @@ jobs:
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
-          file: .docker/base/base.dockerfile
+          file: .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
