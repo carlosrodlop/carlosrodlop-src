@@ -21,8 +21,7 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add kubectl && \
     asdf plugin add velero && \
     asdf plugin add kubectx && \
-    asdf install && \
-    helm plugin install https://github.com/komodorio/helm-dashboard.git
+    asdf install
 
 # Place into the mount with the Project Code
 WORKDIR /root/labs
