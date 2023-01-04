@@ -18,8 +18,8 @@ docker-run-package: guard-IMAGE
         --mount type=bind,source="$(MKFILE_DIR)/forks",target=/root/labs \
         --mount type=bind,source="$(HOME)/.aws",target=/root/.aws \
         --mount type=bind,source="$(HOME)/.ssh",target=/root/.ssh \
-        -v "$(MKFILE_DIR)"/.docker/v_kube:/root/.kube/ \
-        -v "$(MKFILE_DIR)"/.docker/v_tmp:/tmp/ \
+        -v "$(MKFILE_DIR)"/.docker/$(IMAGE)/v_kube:/root/.kube/ \
+        -v "$(MKFILE_DIR)"/.docker/$(IMAGE)/v_tmp:/tmp/ \
 		--platform linux/amd64 \
         $(DOCKER_REGISTRY).$(IMAGE):main
 
