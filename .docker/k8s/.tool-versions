@@ -1,4 +1,4 @@
-# Installed plugins ONLY
+# K8s tools
 eksctl 0.68.0-rc.0
 helm 3.5.0
 helm-diff 3.4.2

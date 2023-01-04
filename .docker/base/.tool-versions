@@ -1,4 +1,4 @@
-# Installed plugins ONLY
+# Base tools
 awscli 2.2.33
 gcloud 408.0.0
 jq 1.6
