@@ -14,7 +14,7 @@ on:
 env:
   NAME: k8s
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.${{ env.NAME }}
+  IMAGE_NAME: ${{ github.repository }}.k8s
 
 jobs:
   check_run:
