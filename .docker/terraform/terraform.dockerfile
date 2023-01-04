@@ -17,7 +17,6 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add terraform-docs && \
     asdf plugin add checkov && \
     asdf plugin add infracost && \
-    asdf plugin add kubectx && \
     asdf install
 
 # Place into the mount with the Project Code
