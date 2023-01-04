@@ -13,8 +13,8 @@ ENV HD_BIND=0.0.0.0 \
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions-k8s
 RUN cat .tool-versions-k8s >> .tool-versions
-RUN source ~/.asdf/asdf.sh && \
-    asdf plugin add helm && \
+RUN ls .tool-versions
+RUN asdf plugin add helm && \
     asdf plugin add helm-diff && \
     asdf plugin add helmfile && \
     asdf plugin add k9s && \
