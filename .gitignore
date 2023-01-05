@@ -1,4 +1,5 @@
 .DS_Store
 reports
 #volumens
-.docker/v_*
+.docker/*/v_kube/cache
+.docker/*/v_kube/config
