@@ -7,7 +7,7 @@ ENV IMAGE_ROOT_PATH=.docker/tf
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions-tf
 RUN cat .tool-versions-tf >> .tool-versions
-RUN source ~/.asdf/asdf.sh && \
+RUN source .asdf/asdf.sh && \
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
     asdf plugin add checkov && \
