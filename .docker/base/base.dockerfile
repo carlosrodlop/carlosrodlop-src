@@ -5,7 +5,10 @@ LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV IMAGE_ROOT_PATH=.docker/base \
     USER=carlosrodlop \
-    UID=999 
+    GROUP=devops \
+    UID=999 \
+    GID=999 \
+    LABS_HOME=/home/carlosrodlop/labs
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -33,20 +36,25 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
+COPY ${IMAGE_ROOT_PATH}/.profile .profile
+RUN cat .profile >> .zshrc
+
 # Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-RUN groupadd -g ${UID} ${USER} && \
-    useradd -r -u ${UID} -g ${USER} ${USER}
+RUN mkdir -p $LABS_HOME \
+    && chown ${UID}:${GID} $LABS_HOME \
+    && groupadd -g ${GID} ${GROUP} \
+    && useradd -d "$LABS_HOME" -u ${UID} -g ${GID} -l -m -s /bin/bash ${USER}
+
 USER ${USER}
-WORKDIR /home/${USER}
+
+# RUN groupadd -g ${UID} ${USER} && \
+#     useradd -r -u ${UID} -g ${USER} ${USER}
+# USER ${USER}
+# WORKDIR /home/${USER}
 
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
-COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
-COPY ${IMAGE_ROOT_PATH}/.profile .profile
-USER root
-RUN cat .profile >> .zshrc
-USER ${USER}
-
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
 RUN source .asdf/asdf.sh && \
