@@ -1,14 +1,13 @@
 FROM ubuntu:20.04 AS base
 SHELL ["/bin/bash", "-c"]
 
-LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
-    version="1.1" \
-    updated_at=2022-12-19
+LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
-# Tooling
-WORKDIR /root
+ENV IMAGE_ROOT_PATH=.docker/base \
+    GROUP=devops \
+    USER=carlosrodlop
 
-ENV IMAGE_ROOT_PATH=.docker/base
+RUN groupadd ${GROUP} && useradd --create-home ${USER}
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -54,7 +53,6 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add sops && \
     asdf install
 
-# Place into the mount with the Project Code
-WORKDIR /root/labs
+USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
