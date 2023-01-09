@@ -19,22 +19,11 @@ docker-run-package: guard-IMAGE
 	@docker run --name devops_tools -it --rm \
         --mount type=bind,source="$(MKFILE_DIR)/forks",target=/root/labs \
         --mount type=bind,source="$(HOME)/.aws",target=/root/.aws \
-		--mount type=bind,source="$(SOPS_KEY)",target=/root/.sops/sops-age-key.txt \
+		--mount type=bind,source="$(PARENT_MKFILE)",target=/root/.Makefile \
+		--mount type=bind,source="$(SOPS_KEY)",target=/root/secrets/files/sops/sops-age-key.txt \
         -v "$(MKFILE_DIR)"/.docker/$(IMAGE)/v_kube:/root/.kube/ \
 		--platform linux/amd64 \
         $(DOCKER_REGISTRY).$(IMAGE):main
-
-.PHONY: sops-create-key
-sops-create-key: ## Set up key from encription with SOPS
-sops-create-key: 
-	$(call print_title,Creating SOPS key)
-ifneq ("$(wildcard $(SOPS_KEY))","")
-	@echo "Sops key $(SOPS_KEY) exists"
-else
-	@age-keygen -o $(SOPS_KEY)
-	@chmod 600 $(SOPS_KEY)
-	@echo "New Sops key created $(SOPS_KEY)"
-endif
 
 .PHONY: sops-encription
 sops-encription: ## Encript file with SOPS. Upload to GitHub

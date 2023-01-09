@@ -7,7 +7,11 @@ on:
     branches: [ main ]
     paths:
       - .docker/k8s/**
-
+  # If the Publish Base Image Package is updated
+  workflow_run:
+    workflows: ["Publish Base Image Package"]
+    types:
+      - completed
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 

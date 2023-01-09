@@ -2,12 +2,16 @@ name: Publish Terraform Image Package
 
 # Controls when the action will run.
 on:
-  # Triggers the workflow on push events but only for the master branch
+  # Triggers the workflow on push events but only for the main branch
   push:
     branches: [ main ]
     paths:
       - .docker/tf/**
-
+  # If the Publish K8s Image Package is updated
+  workflow_run:
+    workflows: ["Publish K8s Image Package"]
+    types:
+      - completed
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
