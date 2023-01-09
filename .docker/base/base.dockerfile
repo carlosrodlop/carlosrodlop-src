@@ -1,12 +1,9 @@
 FROM ubuntu:20.04 AS base
 SHELL ["/bin/bash", "-c"]
 
-LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
+LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
-ENV IMAGE_ROOT_PATH=.docker/base \
-    USER=carlosrodlop \
-    GROUP=devops \
-    UID=999
+ENV IMAGE_ROOT_PATH=.docker/base
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -34,16 +31,14 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-# RUN groupadd -g ${UID} ${USER} && \
-#     useradd -r -u ${UID} -g ${USER} ${USER}
+WORKDIR /root
 
-WORKDIR /home/root
-COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
-COPY ${IMAGE_ROOT_PATH}/.profile .profile
-RUN cat .profile >> .zshrc
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
+COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
+COPY ${IMAGE_ROOT_PATH}/.profile .profile
+RUN cat ".profile" >> ~/.zshrc
+
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
 RUN source .asdf/asdf.sh && \
@@ -54,7 +49,5 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
-
-#USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
