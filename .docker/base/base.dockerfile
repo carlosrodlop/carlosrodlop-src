@@ -9,7 +9,9 @@ ENV IMAGE_ROOT_PATH=.docker/base \
     ROOTLESS_USER=carlosrodlop \
     TZ=Europe/Madrid
 
-#RUN useradd --create-home ${ROOTLESS_USER}
+#WORKDIR /root
+
+RUN useradd --create-home ${ROOTLESS_USER}
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -54,7 +56,7 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add python && \
     asdf install
 
-#USER ${ROOTLESS_USER}
+USER ${ROOTLESS_USER}
 
 # Place into the mount with the Project Code
 WORKDIR /root/labs
