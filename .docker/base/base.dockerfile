@@ -35,8 +35,8 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-RUN groupadd -g ${UID} ${USER} && \
-    useradd -r -u ${UID} -g ${USER} ${USER}
+# RUN groupadd -g ${UID} ${USER} && \
+#     useradd -r -u ${UID} -g ${USER} ${USER}
 
 WORKDIR /home/root
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
@@ -55,6 +55,6 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add age && \
     asdf install
 
-USER ${USER}
+#USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
