@@ -17,4 +17,3 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add velero && \
     asdf plugin add kubectx && \
     asdf install
-
