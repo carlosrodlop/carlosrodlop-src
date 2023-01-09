@@ -4,3 +4,5 @@ gcloud 408.0.0
 jq 1.6
 yq 3.4.1
 python 3.8.12
+age 1.1.0-rc.1
+sops 3.7.3
