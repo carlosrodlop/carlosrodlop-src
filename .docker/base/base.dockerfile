@@ -55,6 +55,4 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add age && \
     asdf install
 
-USER ${USER}
-
 ENTRYPOINT ["/bin/zsh"]
