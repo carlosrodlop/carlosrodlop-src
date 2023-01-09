@@ -34,14 +34,13 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 RUN useradd --create-home ${USER}
-USER ${USER}
 WORKDIR /home/${USER}
 
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
-RUN cat ".profile" >> .zshrc
+RUN cat /home/${USER}/.profile >> .zshrc
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
@@ -53,5 +52,7 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
+
+USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
