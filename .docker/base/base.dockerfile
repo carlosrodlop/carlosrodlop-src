@@ -1,17 +1,14 @@
-FROM ubuntu:22.10 AS base
+FROM ubuntu:20.04 AS base
 SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
-    version="1.1.1" \
-    updated_at=2023-01-09
+    version="1.1" \
+    updated_at=2022-12-19
 
-ENV IMAGE_ROOT_PATH=.docker/base \
-    ROOTLESS_USER=carlosrodlop \
-    TZ=Europe/Madrid
-
-#RUN useradd --create-home ${ROOTLESS_USER}
-
+# Tooling
 WORKDIR /root
+
+ENV IMAGE_ROOT_PATH=.docker/base
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -39,7 +36,6 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
@@ -55,8 +51,6 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add yq && \
     asdf plugin add python && \
     asdf install
-
-#USER ${ROOTLESS_USER}
 
 # Place into the mount with the Project Code
 WORKDIR /root/labs
