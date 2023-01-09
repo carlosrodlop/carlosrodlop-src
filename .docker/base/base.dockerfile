@@ -7,10 +7,6 @@ ENV IMAGE_ROOT_PATH=.docker/base \
     GROUP=devops \
     USER=carlosrodlop
 
-RUN groupadd ${GROUP} && useradd --create-home ${USER}
-
-WORKDIR /home/${USER}
-
 RUN apt-get update -y && \
     # Installation additional repositories
     apt-get install -y software-properties-common && \
@@ -37,13 +33,15 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN groupadd ${GROUP} && useradd --create-home ${USER}
+USER ${USER}
+WORKDIR /home/${USER}
+
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 RUN cat ".profile" >> .zshrc
-
-RUN pwd && whoami && ls -la
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
@@ -55,7 +53,5 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
-
-USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
