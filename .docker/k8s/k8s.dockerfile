@@ -1,9 +1,7 @@
 FROM ghcr.io/carlosrodlop/carlosrodlop-src.base:main AS base
 SHELL ["/bin/bash", "-c"]
 
-LABEL maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
-    version="1.1" \
-    updated_at=2022-12-19
+LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 # Tooling
 WORKDIR /root
