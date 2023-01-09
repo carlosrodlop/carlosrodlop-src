@@ -50,6 +50,8 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add jq && \
     asdf plugin add yq && \
     asdf plugin add python && \
+    asdf plugin add age && \
+    asdf plugin add sops && \
     asdf install
 
 # Place into the mount with the Project Code
