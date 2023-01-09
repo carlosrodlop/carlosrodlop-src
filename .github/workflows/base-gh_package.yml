@@ -62,6 +62,7 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      # https://depot.dev/blog/docker-layer-caching-in-github-actions
       - name: Setup Buildx for cache
         uses: docker/setup-buildx-action@v1    
       - name: Build and Push to GitHub Packages
@@ -72,6 +73,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # https://depot.dev/blog/docker-layer-caching-in-github-actions
           cache-from: type=gha
           cache-to: type=gha,mode=max
