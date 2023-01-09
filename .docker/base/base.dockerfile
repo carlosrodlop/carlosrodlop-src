@@ -43,16 +43,17 @@ COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 RUN cat ".profile" >> .zshrc
 
+RUN pwd && whoami && ls -la
+
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
-RUN source ~/.asdf/asdf.sh && \
+RUN source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
     asdf plugin add jq && \
     asdf plugin add yq && \
     asdf plugin add python && \
     asdf plugin add age && \
-    asdf plugin add sops && \
     asdf install
 
 USER ${USER}
