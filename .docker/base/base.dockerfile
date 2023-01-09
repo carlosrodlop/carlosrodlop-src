@@ -35,8 +35,7 @@ RUN apt-get update -y && \
     less \
     ca-certificates \
     openssh-client \
-    curl \ 
-    age && \
+    curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
