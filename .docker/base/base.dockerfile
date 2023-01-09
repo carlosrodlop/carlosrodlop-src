@@ -33,7 +33,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN adduser --system --group ${USER}
+RUN adduser --system --group --create-home ${USER}
 USER ${USER}
 WORKDIR /home/${USER}
 
