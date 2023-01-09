@@ -4,7 +4,8 @@ SHELL ["/bin/bash", "-c"]
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV IMAGE_ROOT_PATH=.docker/base \
-    USER=carlosrodlop
+    USER=carlosrodlop \
+    UID=999 
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -33,9 +34,8 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 # Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-# RUN groupadd -g 999 ${USER} && \
-#     useradd -r -u 999 -g ${USER} ${USER}
-RUN adduser --system --group ${USER}
+RUN groupadd -g ${UID} ${USER} && \
+    useradd -r -u ${UID} -g ${USER} ${USER}
 USER ${USER}
 WORKDIR /home/${USER}
 
@@ -43,7 +43,7 @@ RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
-RUN cat /home/${USER}/.profile >> .zshrc
+RUN cat /home/${USER}/.profile >> /home/${USER}/.zshrc
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
