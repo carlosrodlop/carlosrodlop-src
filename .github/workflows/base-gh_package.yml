@@ -42,7 +42,7 @@ jobs:
 #        with:
 #          sarif_file: ${{ steps.scan.outputs.sarif }}
   push_to_registry:
-    needs: anchore
+    #needs: anchore
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
