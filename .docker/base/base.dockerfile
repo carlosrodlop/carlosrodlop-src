@@ -1,14 +1,15 @@
-FROM ubuntu:20.04 AS base
+FROM ubuntu:22.04 AS base
 SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" \
-    version="1.1" \
-    updated_at=2022-12-19
+    version="1.1.1" \
+    updated_at=2023-01-09
 
-# Tooling
-WORKDIR /root
+ENV IMAGE_ROOT_PATH=.docker/base \
+    ROOTLESS_USER=carlosrodlop \
+    TZ=Europe/Madrid
 
-ENV IMAGE_ROOT_PATH=.docker/base
+RUN useradd --create-home ${ROOTLESS_USER}
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -32,7 +33,8 @@ RUN apt-get update -y && \
     less \
     ca-certificates \
     openssh-client \
-    curl && \
+    curl \ 
+    age && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -51,6 +53,8 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add yq && \
     asdf plugin add python && \
     asdf install
+
+USER ${ROOTLESS_USER}
 
 # Place into the mount with the Project Code
 WORKDIR /root/labs
