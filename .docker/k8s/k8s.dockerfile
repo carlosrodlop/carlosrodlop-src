@@ -3,9 +3,6 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
-# Tooling
-WORKDIR /root
-
 ENV IMAGE_ROOT_PATH=.docker/k8s
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions-k8s
@@ -21,5 +18,3 @@ RUN source ~/.asdf/asdf.sh && \
     asdf plugin add kubectx && \
     asdf install
 
-# Place into the mount with the Project Code
-WORKDIR /root/labs
