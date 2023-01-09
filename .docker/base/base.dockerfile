@@ -44,7 +44,7 @@ RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 USER root
-RUN cat /home/${USER}/.profile >> /home/${USER}/.zshrc
+RUN cat .profile >> .zshrc
 USER ${USER}
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
