@@ -33,7 +33,9 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN useradd --create-home ${USER}
+RUN addgroup -S appgroup \
+    && adduser -S ${USER} -G appgroup
+USER ${USER}
 WORKDIR /home/${USER}
 
 RUN mkdir .antigen
