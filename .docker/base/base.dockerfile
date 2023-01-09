@@ -9,9 +9,9 @@ ENV IMAGE_ROOT_PATH=.docker/base \
     ROOTLESS_USER=carlosrodlop \
     TZ=Europe/Madrid
 
-#WORKDIR /root
-
 RUN useradd --create-home ${ROOTLESS_USER}
+
+WORKDIR /root
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -39,6 +39,7 @@ RUN apt-get update -y && \
     age && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
 
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
