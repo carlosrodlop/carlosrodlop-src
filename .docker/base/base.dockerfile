@@ -33,8 +33,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN addgroup -S appgroup \
-    && adduser -S ${USER} -G appgroup
+RUN adduser --system --group ${USER}
 USER ${USER}
 WORKDIR /home/${USER}
 
