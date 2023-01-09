@@ -33,19 +33,19 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN groupadd ${GROUP} && useradd --create-home ${USER}
+RUN useradd --create-home ${USER}
 USER ${USER}
 WORKDIR /home/${USER}
 
-RUN mkdir ${HOME}/.antigen
-RUN curl -L git.io/antigen > ${HOME}/.antigen/antigen.zsh
-COPY ${IMAGE_ROOT_PATH}/.zshrc ${HOME}/.zshrc
-COPY ${IMAGE_ROOT_PATH}/.profile ${HOME}/.profile
-RUN cat ${HOME}/.profile >> ${HOME}/.zshrc
+RUN mkdir .antigen
+RUN curl -L git.io/antigen > .antigen/antigen.zsh
+COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
+COPY ${IMAGE_ROOT_PATH}/.profile .profile
+RUN cat .profile >> .zshrc
 
-RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
-COPY ${IMAGE_ROOT_PATH}/.tool-versions ${HOME}/.tool-versions
-RUN source ${HOME}/.asdf/asdf.sh && \
+RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
+COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
+RUN source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
     asdf plugin add jq && \
