@@ -6,9 +6,7 @@ LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 ENV IMAGE_ROOT_PATH=.docker/base \
     USER=carlosrodlop \
     GROUP=devops \
-    UID=999 \
-    GID=999 \
-    LABS_HOME=/home/carlosrodlop/labs
+    UID=999
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -41,17 +39,11 @@ COPY ${IMAGE_ROOT_PATH}/.profile .profile
 RUN cat .profile >> .zshrc
 RUN mkdir .antigen
 
-
-RUN mkdir -p $LABS_HOME \
-    && chown ${UID}:${GID} $LABS_HOME \
-    && groupadd -g ${GID} ${GROUP} \
-    && useradd -d "$LABS_HOME" -u ${UID} -g ${GID} -l -m -s /bin/bash ${USER}
-WORKDIR /home/${USER}
-
 # Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-# RUN groupadd -g ${UID} ${USER} && \
-#     useradd -r -u ${UID} -g ${USER} ${USER}
-# USER ${USER}
+RUN groupadd -g ${UID} ${USER} && \
+    useradd -r -u ${UID} -g ${USER} ${USER}
+USER ${USER}
+WORKDIR /home/${USER}
 
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
@@ -64,8 +56,5 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
-
-USER ${USER}
-WORKDIR "$LABS_HOME"
 
 ENTRYPOINT ["/bin/zsh"]
