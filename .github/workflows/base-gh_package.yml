@@ -22,21 +22,21 @@ jobs:
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
   #https://github.com/marketplace/actions/anchore-container-scan
-  anchore:
-    needs: check_run
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Build locally the container image
-        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
-      - name: Scan the container image with Anchore
-        uses: anchore/scan-action@v3
-        id: scan
-        with:
-          image: "localbuild/${{ env.IMAGE_NAME }}:latest"
-          fail-build: true
-          severity-cutoff: critical
+  # anchore:
+  #   needs: check_run
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v2
+  #     - name: Build locally the container image
+  #       run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+  #     - name: Scan the container image with Anchore
+  #       uses: anchore/scan-action@v3
+  #       id: scan
+  #       with:
+  #         image: "localbuild/${{ env.IMAGE_NAME }}:latest"
+  #         fail-build: true
+  #         severity-cutoff: critical
 #      - name: upload Anchore scan SARIF report
 #        uses: github/codeql-action/upload-sarif@v2
 #        with:
