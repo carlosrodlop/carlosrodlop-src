@@ -35,12 +35,13 @@ RUN apt-get update -y && \
 
 RUN groupadd ${GROUP} && useradd --create-home ${USER}
 USER ${USER}
+WORKDIR /home/${USER}
 
 RUN mkdir ${HOME}/.antigen
 RUN curl -L git.io/antigen > ${HOME}/.antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc ${HOME}/.zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile ${HOME}/.profile
-RUN cat ".profile" >> ${HOME}/.zshrc
+RUN cat ${HOME}/.profile >> ${HOME}/.zshrc
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git ${HOME}/.asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions ${HOME}/.tool-versions
