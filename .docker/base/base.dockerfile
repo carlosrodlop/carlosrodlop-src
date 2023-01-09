@@ -34,17 +34,15 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
+RUN groupadd -g ${UID} ${USER} && \
+    useradd -r -u ${UID} -g ${USER} ${USER}
+WORKDIR /home/${USER}
+
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 RUN cat .profile >> .zshrc
 RUN mkdir .antigen
-
-# Process in containers should not run as root (https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
-RUN groupadd -g ${UID} ${USER} && \
-    useradd -r -u ${UID} -g ${USER} ${USER}
-USER ${USER}
-WORKDIR /home/${USER}
-
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
@@ -56,5 +54,7 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
+
+USER ${USER}
 
 ENTRYPOINT ["/bin/zsh"]
