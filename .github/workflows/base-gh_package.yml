@@ -62,8 +62,10 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Setup Buildx for cache
+        uses: docker/setup-buildx-action@v1    
       - name: Build and Push to GitHub Packages
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v2
         with:
           context: .
           file: .docker/base/base.dockerfile
