@@ -32,6 +32,7 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
+
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
@@ -48,5 +49,7 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf install
+
+WORKDIR /root/labs
 
 ENTRYPOINT ["/bin/zsh"]

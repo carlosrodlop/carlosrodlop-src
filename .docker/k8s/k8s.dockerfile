@@ -1,9 +1,8 @@
 FROM ghcr.io/carlosrodlop/carlosrodlop-src.base:main AS base
-SHELL ["/bin/bash", "-c"]
-
-LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV IMAGE_ROOT_PATH=.docker/k8s
+
+WORKDIR /root
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions-k8s
 RUN cat .tool-versions-k8s >> .tool-versions
@@ -17,3 +16,5 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add velero && \
     asdf plugin add kubectx && \
     asdf install
+
+WORKDIR /root/labs
