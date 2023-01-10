@@ -12,6 +12,7 @@ on:
   workflow_dispatch:
 
 env:
+  NAME: base
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}.base
 
@@ -29,7 +30,7 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Build locally the container image
-        run: docker build . --file .docker/base/base.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+        run: docker build . --file .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
       - name: Scan the container image with Anchore
         uses: anchore/scan-action@v3
         id: scan
@@ -70,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: .docker/base/base.dockerfile
+          file: .docker/${{ env.NAME }}/${{ NAME }}.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
