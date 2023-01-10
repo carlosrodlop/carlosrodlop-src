@@ -13,4 +13,9 @@ RUN source .asdf/asdf.sh && \
     asdf plugin add infracost && \
     asdf install
 
+# https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
+RUN source /root/.asdf/asdf.sh && \
+    rm -f /root/.asdf/shims/* && \
+    asdf reshim
+
 WORKDIR /root/labs
