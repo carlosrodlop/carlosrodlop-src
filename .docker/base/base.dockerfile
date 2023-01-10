@@ -3,7 +3,8 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
-ENV IMAGE_ROOT_PATH=.docker/base
+ENV IMAGE_ROOT_PATH=.docker/base \
+    ASDF_VERSION=v0.10.2
 
 RUN apt-get update -y && \
     # Installation additional repositories
@@ -33,13 +34,14 @@ RUN apt-get update -y && \
 
 WORKDIR /root
 
+#https://github.com/zsh-users/antigen
 RUN mkdir .antigen
 RUN curl -L git.io/antigen > .antigen/antigen.zsh
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 RUN cat ".profile" >> ~/.zshrc
 
-RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git .asdf
+RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
 RUN source .asdf/asdf.sh && \
     asdf plugin add awscli && \
