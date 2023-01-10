@@ -1,18 +1,14 @@
-FROM ubuntu:20.04 AS base
+FROM ubuntu:20.04
 SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
 RUN apt-get update -y && \
-    # Installation additional repositories
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update -y && \
-    # Installation common tools
+    apt-get install -y --no-install-recommends software-properties-common && \
     apt-get install -y --no-install-recommends \
     # https://brain2life.hashnode.dev/how-to-install-pyenv-python-version-manager-on-ubuntu-2004
     make build-essential libssl-dev zlib1g-dev \
-    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    libbz2-dev libreadline-dev libsqlite3-dev llvm \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
     git \
     zsh \
@@ -35,15 +31,17 @@ ENV IMAGE_ROOT_PATH=.docker/base \
 WORKDIR /root
 
 #https://github.com/zsh-users/antigen
-RUN mkdir .antigen
-RUN curl -L git.io/antigen > .antigen/antigen.zsh
+
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
-RUN cat ".profile" >> ~/.zshrc
-
-RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
-RUN source .asdf/asdf.sh && \
+
+RUN mkdir .antigen && \
+    curl -L git.io/antigen > .antigen/antigen.zsh && \
+    cat ".profile" >> ~/.zshrc
+
+RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf && \
+    source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
     asdf plugin add jq && \
