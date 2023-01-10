@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: .docker/${{ env.NAME }}/${{ NAME }}.dockerfile
+          file: .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
