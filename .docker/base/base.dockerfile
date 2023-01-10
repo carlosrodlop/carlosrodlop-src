@@ -3,9 +3,6 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
-ENV IMAGE_ROOT_PATH=.docker/base \
-    ASDF_VERSION=v0.10.2
-
 RUN apt-get update -y && \
     # Installation additional repositories
     apt-get install -y software-properties-common && \
@@ -31,6 +28,9 @@ RUN apt-get update -y && \
     curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+ENV IMAGE_ROOT_PATH=.docker/base \
+    ASDF_VERSION=v0.10.2
 
 WORKDIR /root
 
