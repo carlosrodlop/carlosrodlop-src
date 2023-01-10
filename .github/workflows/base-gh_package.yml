@@ -14,7 +14,7 @@ on:
 env:
   NAME: base
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.${{ env.NAME }}
+  IMAGE_NAME: ${{ github.repository }}.base
 
 jobs:
   check_run:
@@ -29,8 +29,14 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - uses: docker/setup-buildx-action@v1
       - name: Build locally the container image
         run: docker build . --file .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+        with:
+          context: .
+          #https://depot.dev/blog/docker-layer-caching-in-github-actions 
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Scan the container image with Anchore
         uses: anchore/scan-action@v3
         id: scan
@@ -64,8 +70,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      #https://depot.dev/blog/docker-layer-caching-in-github-actions       
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}     
       - uses: docker/setup-buildx-action@v1
       - name: Build and Push to GitHub Packages
         uses: docker/build-push-action@v2
@@ -75,5 +80,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          #https://depot.dev/blog/docker-layer-caching-in-github-actions 
           cache-from: type=gha
           cache-to: type=gha,mode=max
