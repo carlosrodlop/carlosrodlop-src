@@ -29,14 +29,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - uses: docker/setup-buildx-action@v1
       - name: Build locally the container image
         run: docker build . --file .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
-        with:
-          context: .
-          #https://depot.dev/blog/docker-layer-caching-in-github-actions 
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
       - name: Scan the container image with Anchore
         uses: anchore/scan-action@v3
         id: scan
