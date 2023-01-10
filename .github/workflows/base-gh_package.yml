@@ -14,7 +14,7 @@ on:
 env:
   NAME: base
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.base
+  IMAGE_NAME: ${{ github.repository }}.${{ env.NAME }}
 
 jobs:
   check_run:
