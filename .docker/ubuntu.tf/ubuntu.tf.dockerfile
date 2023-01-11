@@ -1,6 +1,6 @@
 FROM ghcr.io/carlosrodlop/carlosrodlop-src.k8s:main
 
-ENV IMAGE_ROOT_PATH=.docker/tf
+ENV IMAGE_ROOT_PATH=.docker/ubuntu.tf
 
 WORKDIR /root
 
