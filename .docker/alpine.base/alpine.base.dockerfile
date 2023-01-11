@@ -30,8 +30,6 @@ ENV IMAGE_ROOT_PATH=.docker/base \
 
 WORKDIR /root
 
-#https://github.com/zsh-users/antigen
-
 COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
 COPY ${IMAGE_ROOT_PATH}/.profile .profile
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions

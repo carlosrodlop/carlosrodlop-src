@@ -4,9 +4,9 @@ name: Publish Terraform Image Package
 on:
   # Triggers the workflow on push events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - .docker/tf/**
+      - .docker/ubuntu.tf/**
   # If the Publish K8s Image Package is updated
   workflow_run:
     workflows: ["Publish K8s Image Package"]
@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
 
 env:
-  NAME: tf
+  NAME: ubuntu.tf
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}.tf
+  IMAGE_NAME: ${{ github.repository }}.ubuntu.tf
 
 jobs:
   check_run:
@@ -58,6 +58,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          #https://depot.dev/blog/docker-layer-caching-in-github-actions 
+          #https://depot.dev/blog/docker-layer-caching-in-github-actions
           cache-from: type=gha
           cache-to: type=gha,mode=max
