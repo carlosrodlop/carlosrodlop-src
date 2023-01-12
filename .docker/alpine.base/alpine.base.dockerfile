@@ -1,58 +1,19 @@
-FROM ubuntu:20.04
-SHELL ["/bin/bash", "-c"]
+FROM alpine:latest
+SHELL ["/bin/bash", "-l", "-c"]
 
-LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
+RUN apk add --virtual .asdf-deps --no-cache bash curl git 
+RUN adduser -s /bin/bash -h /asdf -D asdf
 
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends software-properties-common && \
-    apt-get install -y --no-install-recommends \
-    # https://brain2life.hashnode.dev/how-to-install-pyenv-python-version-manager-on-ubuntu-2004
-    make build-essential libssl-dev zlib1g-dev \
-    libbz2-dev libreadline-dev libsqlite3-dev llvm \
-    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-    git \
-    zsh \
-    unzip \
-    gnupg \
-    gpg-agent \
-    parallel \
-    vim \
-    wget \
-    less \
-    ca-certificates \
-    openssh-client \
-    curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+ENV PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 
-ENV IMAGE_ROOT_PATH=.docker/base \
-    ASDF_VERSION=v0.10.2
+USER asdf
+WORKDIR /asdf
 
-WORKDIR /root
+COPY asdf-install-toolset /usr/local/bin
 
-COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
-COPY ${IMAGE_ROOT_PATH}/.profile .profile
-COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
-
-RUN mkdir .antigen && \
-    curl -L git.io/antigen > .antigen/antigen.zsh && \
-    cat ".profile" >> ~/.zshrc
-
-RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf && \
-    source .asdf/asdf.sh && \
-    asdf plugin add awscli && \
-    asdf plugin add gcloud && \
-    asdf plugin add jq && \
-    asdf plugin add yq && \
-    asdf plugin add python && \
-    asdf plugin add age && \
-    asdf install
-
-# https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
-RUN source /root/.asdf/asdf.sh && \
-    rm -f /root/.asdf/shims/* && \
-    asdf reshim
-
-WORKDIR /root/labs
-
-ENTRYPOINT ["/bin/zsh"]
+ONBUILD USER asdf
+ONBUILD RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
+    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
+    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.profile && \
+    source ~/.bashrc && \
+    mkdir -p $HOME/.asdf/toolset
