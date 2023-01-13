@@ -3,6 +3,7 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
+#https://packages.ubuntu.com/
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
     apt-get install -y --no-install-recommends \
