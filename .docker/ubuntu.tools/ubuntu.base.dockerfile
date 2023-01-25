@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:20.04
 RUN adduser --disabled-password --gecos "" myuser
 RUN apt-get update && \
     apt-get install -y curl git
