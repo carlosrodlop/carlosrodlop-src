@@ -1,5 +1,5 @@
 #https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-name: Publish ASDF alpine image build on Ubuntu
+name: Publish ASDF alpine, Ubuntu build
 
 # Controls when the action will run.
 on:
