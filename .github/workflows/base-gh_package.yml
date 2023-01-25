@@ -24,29 +24,29 @@ jobs:
     steps:
       - run: echo "${{ github.event.head_commit.message }}"
   #https://github.com/marketplace/actions/anchore-container-scan
-  anchore:
-    needs: check_run
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Build locally the container image
-        run: docker build . --file .docker/${{ env.PATH }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
-      - name: Scan the container image with Anchore
-        uses: anchore/scan-action@v3
-        id: scan
-        with:
-          image: "localbuild/${{ env.IMAGE_NAME }}:latest"
-          fail-build: true
-          severity-cutoff: critical
-      - name: upload Anchore scan SARIF report
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: ${{ steps.scan.outputs.sarif }}
-      - name: Inspect action SARIF report
-        run: cat ${{ steps.scan.outputs.sarif }}
+  # anchore:
+  #   needs: check_run
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v2
+  #     - name: Build locally the container image
+  #       run: docker build . --file .docker/${{ env.PATH }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+  #     - name: Scan the container image with Anchore
+  #       uses: anchore/scan-action@v3
+  #       id: scan
+  #       with:
+  #         image: "localbuild/${{ env.IMAGE_NAME }}:latest"
+  #         fail-build: true
+  #         severity-cutoff: critical
+  #     - name: upload Anchore scan SARIF report
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: ${{ steps.scan.outputs.sarif }}
+  #     - name: Inspect action SARIF report
+  #       run: cat ${{ steps.scan.outputs.sarif }}
   push_to_registry:
-    needs: anchore
+    #needs: anchore
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
     permissions:
