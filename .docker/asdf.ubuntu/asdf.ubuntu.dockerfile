@@ -47,6 +47,18 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add yq && \
     asdf plugin add python && \
     asdf plugin add age && \
+    asdf plugin add eksctl && \
+    asdf plugin add helm && \
+    asdf plugin add helm-diff && \
+    asdf plugin add helmfile && \
+    asdf plugin add k9s && \
+    asdf plugin add kubectl && \
+    asdf plugin add velero && \
+    asdf plugin add kubectx && \
+    asdf plugin add terraform && \
+    asdf plugin add terraform-docs && \
+    asdf plugin add infracost && \
+    asdf plugin add checkov && \
     asdf install
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
