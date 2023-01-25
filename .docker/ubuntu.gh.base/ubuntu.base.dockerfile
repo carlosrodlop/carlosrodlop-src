@@ -26,7 +26,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV IMAGE_ROOT_PATH=.docker/ubuntu.base \
+ENV IMAGE_ROOT_PATH=.docker/ubuntu.gh.base \
     ASDF_VERSION=v0.10.2
 
 WORKDIR /root

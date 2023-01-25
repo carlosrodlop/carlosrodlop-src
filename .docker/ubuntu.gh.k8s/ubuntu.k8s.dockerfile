@@ -1,6 +1,6 @@
 FROM ghcr.io/carlosrodlop/carlosrodlop-src.base:main
 
-ENV IMAGE_ROOT_PATH=.docker/ubuntu.k8s
+ENV IMAGE_ROOT_PATH=.docker/ubuntu.gh.k8s
 
 WORKDIR /root
 
