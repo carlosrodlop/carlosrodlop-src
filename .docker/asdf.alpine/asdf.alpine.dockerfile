@@ -14,7 +14,7 @@ ENV PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 USER asdf
 WORKDIR /asdf
 
-ENV IMAGE_ROOT_PATH=.docker/alpine.base \
+ENV IMAGE_ROOT_PATH=.docker/asdf.alpine \
     ASDF_VERSION=v0.10.2
 
 COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
@@ -30,4 +30,6 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
     #asdf plugin add python && \
     asdf plugin add age && \
     asdf install
+
+ENTRYPOINT ["/bin/sh"]
 

@@ -1,0 +1,79 @@
+name: Publish Base Image Package
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [main]
+    paths:
+      - .docker/ubuntu.base/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  NAME: ubuntu.base
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}.ubuntu.base
+
+jobs:
+  check_run:
+    runs-on: ubuntu-latest
+    if: "! contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+      - run: echo "${{ github.event.head_commit.message }}"
+  #https://github.com/marketplace/actions/anchore-container-scan
+  # anchore:
+  #   needs: check_run
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v2
+  #     - name: Build locally the container image
+  #       run: docker build . --file .docker/${{ env.PATH }}/${{ env.NAME }}.dockerfile --tag localbuild/${{ env.IMAGE_NAME }}:latest
+  #     - name: Scan the container image with Anchore
+  #       uses: anchore/scan-action@v3
+  #       id: scan
+  #       with:
+  #         image: "localbuild/${{ env.IMAGE_NAME }}:latest"
+  #         fail-build: true
+  #         severity-cutoff: critical
+  #     - name: upload Anchore scan SARIF report
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: ${{ steps.scan.outputs.sarif }}
+  #     - name: Inspect action SARIF report
+  #       run: cat ${{ steps.scan.outputs.sarif }}
+  push_to_registry:
+    needs: check_run
+    name: Push Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - uses: docker/setup-buildx-action@v1
+      - name: Build and Push to GitHub Packages
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: .docker/${{ env.NAME }}/${{ env.NAME }}.dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          #https://depot.dev/blog/docker-layer-caching-in-github-actions
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
