@@ -1,21 +1,37 @@
 MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-PARENT_MKFILE   := $$PARENT_REPO/Makefile
+PARENT_MKFILE   := $(PARENT_REPO)/Makefile
 GH_USER 		:= carlosrodlop
 GH_REGISTRY 	:= ghcr.io/carlosrodlop/docker-labs
-GH_SECRET   	:= $$SECRETS_REPO/files/github/gh_token.txt
+GH_SECRET   	:= $(SECRETS_REPO)/files/github/gh_token.txt
 DH_USER 		:= carlosrodlop
-DH_SECRET   	:= $$SECRETS_REPO/files/dockerhub/dh_secrets.txt
-TAG_BUILD_OS 	:= MacOS_M1
+DH_SECRET   	:= $(SECRETS_REPO)/files/dockerhub/dh_secrets.txt
+RUN_OPTS        := --rm -it --name $(IMAGE)_$(shell echo $$RANDOM) \
+		--cpus=4 --memory=16g --memory-reservation=14g \
+		-v $(HOME)/.aws:/asdf/.aws:cached \
+		-v $(PARENT_MKFILE):/asdf/.Makefile:cached
+LOCAL_BUILD_NODE := m1
+
+#DEFAULTS
+ROOT 			?= aws
+BACKEND         ?= false
 
 include $(PARENT_MKFILE)
+
+.PHONY: docker-local-buildAndRun
+docker-local-buildAndRun: ## Build and Run locally the docker configuration pased as parameter. Usage: IMAGE=base.ubuntu make docker-run-local
+docker-local-buildAndRun: guard-IMAGE
+	$(call print_title,Running base image $(IMAGE) locally)
+	docker build . --file .docker/$(IMAGE)/$(IMAGE).dockerfile --tag local.$(DH_USER)/$(IMAGE):latest --tag local.$(DH_USER)/$(IMAGE):$(shell git rev-parse --verify HEAD --short=5)
+	docker run $(RUN_OPTS) \
+		local.$(DH_USER)/$(IMAGE):latest
 
 .PHONY: docker-dh-buildAndPush
 docker-dh-buildAndPush: ## Build and Run locally the docker configuration pased as parameter. Usage: IMAGE=base.ubuntu make docker-run-local
 docker-dh-buildAndPush: guard-IMAGE
 	$(call print_title,Running base image $(IMAGE) locally)
-	docker build . --file .docker/$(IMAGE)/$(IMAGE).dockerfile --tag $(TAG_BUILD_OS) --tag $(DH_USER)/$(IMAGE):latest
+	docker build . --file .docker/$(IMAGE)/$(IMAGE).dockerfile --tag $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):latest --tag $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):$(shell git rev-parse --verify HEAD --short=5)
 	cat $(DH_SECRET) | docker login --username $(DH_USER)  --password-stdin
-	docker $(DH_USER)/$(IMAGE):latest
+	docker push $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):latest
 
 .PHONY: docker-dh-run
 docker-dh-run: ## Build and Run locally the docker configuration pased as parameter. Usage: IMAGE=base.ubuntu make docker-run-local
