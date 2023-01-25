@@ -6,13 +6,12 @@ on:
   push:
     branches: [main]
     paths:
-      - .docker/ubuntu.gh.base/**
+      - .docker/ubuntu.base/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
-  PATH: ubuntu.gh.base
   NAME: ubuntu.base
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}.ubuntu.base
