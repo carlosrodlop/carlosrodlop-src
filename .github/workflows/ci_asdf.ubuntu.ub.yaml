@@ -13,6 +13,7 @@ on:
   workflow_dispatch:
 
 env:
+  #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/asdf.ubuntu.ub
   DOCKERFILE: .docker/asdf.ubuntu/asdf.ubuntu.dockerfile
