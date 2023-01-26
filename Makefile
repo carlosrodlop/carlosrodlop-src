@@ -10,6 +10,7 @@ RUN_OPTS        := --rm -it  \
 		--cpus=4 --memory=16g --memory-reservation=14g \
 		-v $(HOST_CODE_BASE):/root/labs:delegated \
 		-v $(HOME)/.aws:/root/.aws:cached \
+		-v $(SECRETS_REPO)/files/sops/sops-age-key.txt:/root/.sops-age-key.txt:cached \
 		-v $(PARENT_MKFILE):/root/.Makefile:cached
 RUN_OPTS_ROOTLESS := --rm -it  \
 		--cpus=4 --memory=16g --memory-reservation=14g \
