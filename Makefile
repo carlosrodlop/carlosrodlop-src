@@ -20,6 +20,7 @@ LOCAL_BUILD_NODE := m1
 
 #DEFAULTS
 DHI 			?= asdf.ubuntu.m1
+DF        		?= asdf.ubuntu
 
 include $(PARENT_MKFILE)
 
@@ -35,9 +36,9 @@ docker-local-buildAndRun: guard-DF
 docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF)pased as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
 docker-dh-buildAndPush: guard-DF
 	$(call print_title,Build and Push $(DF) to DockerHub)
-	docker build . --file .docker/$(IMAGE)/$(IMAGE).dockerfile --tag $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):latest --tag $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):$(shell git rev-parse --verify HEAD --short=5)
+	docker build . --file .docker/$(DF)/$(DF).dockerfile --tag $(DH_USER)/$(DF).$(LOCAL_BUILD_NODE):latest --tag $(DH_USER)/$(DF).$(LOCAL_BUILD_NODE):$(shell git rev-parse --verify HEAD --short=5)
 	cat $(DH_SECRET) | docker login --username $(DH_USER)  --password-stdin
-	docker push $(DH_USER)/$(IMAGE).$(LOCAL_BUILD_NODE):latest
+	docker push $(DH_USER)/$(DF).$(LOCAL_BUILD_NODE):latest
 
 .PHONY: docker-dh-run
 docker-dh-run: ## Build a DockerHub Image (DHI) pased as parameter. Usage: DHI=base.ubuntu make docker-dh-run
