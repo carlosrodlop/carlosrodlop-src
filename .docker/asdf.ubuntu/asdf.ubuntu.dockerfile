@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 SHELL ["/bin/bash", "-c"]
 
-LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
+LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 #https://packages.ubuntu.com/
 RUN apt-get update -y && \
@@ -44,7 +44,7 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
     asdf plugin add jq && \
-    asdf plugin add yq && \
+    #asdf plugin add yq && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf plugin add eksctl && \
@@ -63,6 +63,9 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
 RUN source /root/.asdf/asdf.sh && \
     rm -f /root/.asdf/shims/* && \
     asdf reshim
+
+RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
+    chmod +x /usr/bin/yq
 
 WORKDIR /root/labs
 
