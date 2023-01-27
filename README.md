@@ -1,17 +1,17 @@
 # Docker Labs
 
+## Precommits
+
 [![gitleaks badge](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/zricethezav/gitleaks#pre-commit)
-[![ShiftLeftSecurity](https://img.shields.io/badge/SAST%20by-ShiftLeftSecurity-blue)](https://github.com/ShiftLeftSecurity/sast-scan#scanning-projects-locally)
 
 ## CI
 
+[![anchore](https://img.shields.io/badge/scan%20by-anchore-blue)](https://github.com/anchore/scan-action)
+
 * Docker images are uploaded to the following registries via GitHub Actions:
 
-- [Github](https://github.com/carlosrodlop?tab=packages&repo_name=docker-labs)
-- [DockerHub](https://hub.docker.com/u/carlosrodlop)
-
-
-* It uses [![anchore](https://img.shields.io/badge/scan%20by-anchore-blue)](https://github.com/anchore/scan-action) for images scanning.
+  * [Github](https://github.com/carlosrodlop?tab=packages&repo_name=docker-labs)
+  * [DockerHub](https://hub.docker.com/u/carlosrodlop)
 
 ## Image Catalog
 
