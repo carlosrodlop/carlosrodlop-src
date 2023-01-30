@@ -21,6 +21,7 @@ LOCAL_BUILD_NODE := m1
 #DEFAULTS
 DHI 			?= asdf.ubuntu.m1
 DF        		?= asdf.ubuntu
+HD_PORT_BIND 	?= 8989
 
 include $(PARENT_MKFILE)
 
@@ -44,7 +45,9 @@ docker-dh-buildAndPush: guard-DF
 docker-dh-run: ## Build a DockerHub Image (DHI) pased as parameter. Usage: DHI=base.ubuntu make docker-dh-run
 docker-dh-run: guard-DHI
 	$(call print_title,Run image $(DHI) from DockerHub)
-	docker run --name $(shell echo $(DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) $(RUN_OPTS) \
+	docker run --pull=always --name $(shell echo $(DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
+		$(RUN_OPTS) \
+		-p $(HD_PORT_BIND):8989 \
 		$(DH_USER)/$(DHI)
 
 .PHONY: docker-gh-run

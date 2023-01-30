@@ -26,14 +26,17 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV IMAGE_ROOT_PATH=.docker/asdf.ubuntu \
-    ASDF_VERSION=v0.10.2
+ENV DOCKERFILE_PATH=.docker/asdf.ubuntu \
+    ASDF_VERSION=v0.10.2 \
+    #https://github.com/komodorio/helm-dashboard#setup
+    HD_BIND=0.0.0.0 \
+    USER=root
 
-WORKDIR /root
+WORKDIR /${USER}
 
-COPY ${IMAGE_ROOT_PATH}/.zshrc .zshrc
-COPY ${IMAGE_ROOT_PATH}/.profile .profile
-COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
+COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
+COPY ${DOCKERFILE_PATH}/.profile .profile
+COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN mkdir .antigen && \
     curl -L git.io/antigen > .antigen/antigen.zsh && \
@@ -44,7 +47,6 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
     asdf plugin add jq && \
-    #asdf plugin add yq && \
     asdf plugin add python && \
     asdf plugin add age && \
     asdf plugin add eksctl && \
@@ -57,15 +59,18 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add kubectx && \
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
-    asdf install
+    asdf install && \
+    #https://github.com/komodorio/helm-dashboard#setup
+    helm plugin install https://github.com/komodorio/helm-dashboard.git && \
+    #installaing yq from mikefarah
+    #https://github.com/mikefarah/yq#latest-version
+    wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
-RUN source /root/.asdf/asdf.sh && \
-    rm -f /root/.asdf/shims/* && \
+RUN source /${USER}/.asdf/asdf.sh && \
+    rm -f /${USER}/.asdf/shims/* && \
     asdf reshim
-
-RUN wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
-    chmod +x /usr/bin/yq
 
 WORKDIR /root/labs
 

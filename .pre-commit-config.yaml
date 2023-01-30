@@ -32,3 +32,7 @@ repos:
     - id: sops-encryption
       # Uncomment to exclude all markdown files from encryption
       # exclude: *.\.md
+- repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+  rev: v0.1.0
+  hooks:
+  - id: dockerfilelint
