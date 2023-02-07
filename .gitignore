@@ -3,3 +3,5 @@ reports
 #volumen
 .docker/*/v_kube/cache
 .docker/*/v_kube/config
+*.env
+!*.env.example

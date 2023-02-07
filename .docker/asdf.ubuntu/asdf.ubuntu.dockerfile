@@ -28,8 +28,6 @@ RUN apt-get update -y && \
 
 ENV DOCKERFILE_PATH=.docker/asdf.ubuntu \
     ASDF_VERSION=v0.10.2 \
-    #https://github.com/komodorio/helm-dashboard#setup
-    HD_BIND=0.0.0.0 \
     USER=root
 
 WORKDIR /${USER}
@@ -60,8 +58,6 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
     asdf install && \
-    #https://github.com/komodorio/helm-dashboard#setup
-    helm plugin install https://github.com/komodorio/helm-dashboard.git && \
     #installaing yq from mikefarah
     #https://github.com/mikefarah/yq#latest-version
     wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
