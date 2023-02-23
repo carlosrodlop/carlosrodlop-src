@@ -13,7 +13,8 @@
 
 ### ASDF
 
-[asdf](https://asdf-vm.com/)
+* [Oh My Zsh - a delightful & open source framework for Zsh](https://ohmyz.sh/)
+* [asdf](https://asdf-vm.com/)
 
 - [![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.alpine.ub.yaml)
 - [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.ubuntu.ub.yaml)
