@@ -21,7 +21,6 @@ LOCAL_BUILD_NODE := m1
 #DEFAULTS
 DHI 			?= asdf.ubuntu.m1
 DF        		?= asdf.ubuntu
-HD_PORT_BIND 	?= 8989
 
 include $(PARENT_MKFILE)
 
@@ -35,7 +34,6 @@ else
 	@echo Error .docker/docker.env file does not exist and it is required
 	@exit 1
 endif
-
 
 .PHONY: docker-local-buildAndRun
 docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) pased as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
@@ -59,7 +57,6 @@ docker-dh-run: guard-DHI check_docker_envFile
 	$(call print_title,Run image $(DHI) from DockerHub)
 	docker run --pull=always --name $(shell echo $(DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
 		$(RUN_OPTS) \
-		-p $(HD_PORT_BIND):8989 \
 		$(DH_USER)/$(DHI)
 
 .PHONY: docker-gh-run
