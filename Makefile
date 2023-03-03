@@ -17,13 +17,15 @@ RUN_OPTS_ROOTLESS := --rm -it  \
 		-v $(HOME)/.aws:/asdf/.aws:cached \
 		-v $(PARENT_MKFILE):/asdf/.Makefile:cached
 LOCAL_BUILD_NODE := m1
+N_CONTAINER_RUNNING := $(shell docker container ls -aq | wc -l)
+N_IMAGES_LAYERS := $(shell docker image ls -q | wc -l)
+N_DANGLING_IMAGES_LAYERS := $(shell docker images -f "dangling=true" -q | wc -l)
 
 #DEFAULTS
 DHI 			?= asdf.ubuntu.m1
 DF        		?= asdf.ubuntu
 
 include $(PARENT_MKFILE)
-
 
 #https://refine.dev/blog/docker-build-args-and-env-vars/#using-env-file
 .PHONY: check_docker_envFile
@@ -67,6 +69,15 @@ docker-gh-run: guard-GHI check_docker_envFile
 	docker run --name $(shell echo $(DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) $(RUN_OPTS) \
 		--platform linux/amd64 \
         $(DOCKER_REGISTRY)/$(GHI)
+
+.PHONY: docker-total-clean
+docker-total-clean: ## Fully clean all docker images and containers
+docker-total-clean:
+	$(call print_title,Purge docker)
+	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then docker container stop $(shell docker container ls -aq) && docker container rm $(shell docker container ls -aq); fi
+	@#if [ $(N_IMAGES_LAYERS) -gt 0 ]; then docker image rm -f $(shell docker image ls -q); fi
+	if [ $(N_DANGLING_IMAGES_LAYERS) -gt 0 ]; then docker rmi -f $(shell docker images -f "dangling=true" -q); fi 
+	docker system prune --all --force --volumes
 
 .PHONY: sast-scan-all
 sast-scan-all: ## SAST scan from https://slscan.io/en/latest/ for the root
