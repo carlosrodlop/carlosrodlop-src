@@ -77,7 +77,7 @@ docker-total-clean:
 	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then docker container stop $(shell docker container ls -aq) && docker container rm $(shell docker container ls -aq); fi
 	@#if [ $(N_IMAGES_LAYERS) -gt 0 ]; then docker image rm -f $(shell docker image ls -q); fi
 	if [ $(N_DANGLING_IMAGES_LAYERS) -gt 0 ]; then docker rmi -f $(shell docker images -f "dangling=true" -q); fi 
-	docker system prune --all --force --volumes
+	@docker system prune --all --force --volumes
 
 .PHONY: sast-scan-all
 sast-scan-all: ## SAST scan from https://slscan.io/en/latest/ for the root
