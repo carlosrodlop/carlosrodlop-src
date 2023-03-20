@@ -25,3 +25,4 @@ This repo is compatible and runnable with [containerd/nerdctl](https://github.co
 
 * [Awesome Docker Repos](https://github.com/stars/carlosrodlop/lists/docker)
 * [Docker - Awesome Software Architecture](https://awesome-architecture.com/devops/docker/docker/)
+* [nerdctl/command-reference](https://github.com/containerd/nerdctl/blob/main/docs/command-reference.md)
