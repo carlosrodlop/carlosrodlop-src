@@ -17,7 +17,7 @@ RUN_OPTS        := --env-file=.docker/docker.env --rm -it  \
 # In you are running and Image built in a linux arch from m1 host --platform linux/amd64 is required. Despite it, the performance won't be good.
 LOCAL_BUILD_NODE := m1
 # Container Engine Runtime (docker, nerdctl)
-CER := docker 
+CER := docker
 # Existing container data
 N_CONTAINER_RUNNING := $(shell $(CER) container ls -aq | wc -l)
 N_IMAGES_LAYERS := $(shell $(CER) image ls -q | wc -l)
