@@ -62,7 +62,9 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     #installaing yq from mikefarah
     #https://github.com/mikefarah/yq#latest-version
     wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
-    chmod +x /usr/bin/yq
+    chmod +x /usr/bin/yq && \
+    #installing robusta cli
+    pip install -U robusta-cli --no-cache
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
 RUN source /${USER}/.asdf/asdf.sh && \
