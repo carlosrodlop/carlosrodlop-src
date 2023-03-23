@@ -1,6 +1,13 @@
 # Docker Library
 
-![GitHub Latest Release)](https://img.shields.io/github/v/release/carlosrodlop/terraform-lib?logo=github)[![gitleaks badge](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/zricethezav/gitleaks#pre-commit) [![gitsecrets](https://img.shields.io/badge/protected%20by-gitsecrets-blue)](https://github.com/awslabs/git-secrets) [![anchore](https://img.shields.io/badge/scan%20by-anchore-blue)](https://github.com/anchore/scan-action)
+<p align="center">
+  <img alt="docker-icon" src="https://visualpharm.com/assets/917/Docker-595b40b65ba036ed117d3f62.svg" height="160" />
+  <p align="center">Welcome to my Docker Library, a storage place for my assets related to my journey around Containers' Land</p>
+</p>
+
+---
+
+![GitHub Latest Release)](https://img.shields.io/github/v/release/carlosrodlop/terraform-lib?logo=github) [![gitleaks badge](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/zricethezav/gitleaks#pre-commit) [![gitsecrets](https://img.shields.io/badge/protected%20by-gitsecrets-blue)](https://github.com/awslabs/git-secrets) [![anchore](https://img.shields.io/badge/scan%20by-anchore-blue)](https://github.com/anchore/scan-action) [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](#awesome)
 
 Welcome to the Docker Library, my storage for reusable assets related to container engines.
 
@@ -23,11 +30,7 @@ Since Docker runtime was deprecated in Kubernetes version 1.20]([Kubernetes is d
 * [![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.alpine.ub.yaml)
 * [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.ubuntu.ub.yaml)
 
-## Releases
-
-Releases follow the [semantic versioning](https://semver.org/). They do not follow a defined train release cadence but the time I need to refer to the code thus the reference does not get lost as the repository evolves.
-
-## References ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
+## Awesome
 
 * [Awesome Docker Repos](https://github.com/stars/carlosrodlop/lists/docker)
 * [Docker - Awesome Software Architecture](https://awesome-architecture.com/devops/docker/docker/)
