@@ -22,13 +22,18 @@ Since Docker runtime was deprecated in Kubernetes version 1.20]([Kubernetes is d
 
 ## Image Catalog
 
-### ASDF
+### ASDF + ohmyz.sh
 
-* [Oh My Zsh - a delightful & open source framework for Zsh](https://ohmyz.sh/)
-* [asdf](https://asdf-vm.com/)
+Image for demos with all nice [Oh My Zsh](https://ohmyz.sh/) and any tool installed by [asdf](https://asdf-vm.com/)
 
 * [![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.alpine.ub.yaml)
 * [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.ubuntu.ub.yaml)
+
+### Stress and Stress-ng
+
+Image for Load Testing including [stress](https://linux.die.net/man/1/stress) and [stress-ng](https://manpages.ubuntu.com/manpages/bionic/man1/stress-ng.1.html)
+
+Ref: [Stress Test CPU and Memory (VM) On a Linux / Unix With Stress-ng - nixCraft](https://www.cyberciti.biz/faq/stress-test-linux-unix-server-with-stress-ng/)
 
 ## Awesome
 
