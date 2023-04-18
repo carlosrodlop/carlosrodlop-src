@@ -1,5 +1,5 @@
 #https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-name: Publish osixia/openldap, Ubuntu build
+name: osixia/openldap, Ubuntu Node
 
 # Controls when the action will run.
 on:
