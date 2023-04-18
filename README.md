@@ -25,7 +25,7 @@ Welcome to the Docker Library, my storage for reusable assets related to contain
 
 ### ASDF + ohmyz.sh
 
-Image for demos with all nice [Oh My Zsh](https://ohmyz.sh/) and any tool installed by [asdf](https://asdf-vm.com/)
+Image for my demos with nice [Oh My Zsh](https://ohmyz.sh/) and tool installation via [asdf](https://asdf-vm.com/)
 
 * [![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.alpine.ub.yaml)
 * [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_asdf.ubuntu.ub.yaml)
@@ -35,6 +35,14 @@ Image for demos with all nice [Oh My Zsh](https://ohmyz.sh/) and any tool instal
 Image for Load Testing including [stress](https://linux.die.net/man/1/stress) and [stress-ng](https://manpages.ubuntu.com/manpages/bionic/man1/stress-ng.1.html)
 
 * [![Stress Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_stress.ubuntu.ub.yaml)
+
+### Osixia openldap + Data
+
+Image for Ldap mock testing extending from [osixia/docker-openldap](https://github.com/osixia/docker-openldap). Ref [Build an OpenLDAP Docker Image That’s Populated With Users](https://betterprogramming.pub/ldap-docker-image-with-populated-users-3a5b4d090aa4)
+
+* [![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub/badge.svg)](https://github.com/carlosrodlop/carlosrodlop-src/actions/workflows/ci_ooldap.debian.ub.yaml)
+
+Another type of implementation on [jenkins-infra/mock-ldap](https://github.com/jenkins-infra/mock-ldap)
 
 ## Awesome
 
