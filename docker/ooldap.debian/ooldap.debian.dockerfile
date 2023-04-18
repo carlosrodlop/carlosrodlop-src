@@ -3,7 +3,7 @@ FROM osixia/openldap
 LABEL maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV LDAP_ORGANISATION="Acme" \
-    LDAP_DOMAIN="acme.org" \
+    LDAP_DOMAIN="shihadeh.intern" \
     DATA_VERSION="v3" \
     IMAGE_ROOT_PATH=docker/ooldap.debian
 
