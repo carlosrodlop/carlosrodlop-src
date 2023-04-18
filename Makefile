@@ -69,7 +69,7 @@ docker-gh-run: check_docker_envFile check_envfile
 docker-compose-run: ## Run docker compose file. Usage: DCF=base.ubuntu make docker-compose-run
 docker-compose-run: check_docker_envFile
 	$(call print_title,Run Docker Compose $(call getEnvProperty,DCF))
-	docker-compose up -d -f docker-compose/$(call getEnvProperty,DCF)
+	cd docker-compose/$(shell echo $(call getEnvProperty,DCF)) && docker-compose up -d
 
 .PHONY: docker-total-clean
 docker-total-clean: ## Fully clean all docker images and containers
