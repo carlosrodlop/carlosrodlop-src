@@ -3,6 +3,7 @@ version: '3.7'
 services:
 
   ldap_server:
+    platform: linux/amd64
     image: carlosrodlop/ooldap.debian.ub:main
     environment:
       LDAP_ADMIN_PASSWORD: test1234
@@ -14,6 +15,7 @@ services:
       - ldap_config:/etc/ldap/slapd.d
 
   ldap_server_admin:
+    platform: linux/amd64
     image: osixia/phpldapadmin:0.7.2
     ports:
       - 8090:80
