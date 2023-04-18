@@ -40,7 +40,7 @@ Image for Load Testing including [stress](https://linux.die.net/man/1/stress) an
 
 Image for Ldap mock testing extending from [osixia/docker-openldap](https://github.com/osixia/docker-openldap). Ref [Build an OpenLDAP Docker Image That’s Populated With Users](https://betterprogramming.pub/ldap-docker-image-with-populated-users-3a5b4d090aa4)
 
-* [![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
+* [![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
 
 Another type of implementation on [jenkins-infra/mock-ldap](https://github.com/jenkins-infra/mock-ldap)
 
