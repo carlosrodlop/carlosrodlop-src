@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - .docker/ooldap.debian/**
+      - docker/ooldap.debian/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +16,7 @@ env:
   #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/ooldap.debian.ub
-  DOCKERFILE: .docker/ooldap.debian/ooldap.debian.dockerfile
+  DOCKERFILE: docker/ooldap.debian/ooldap.debian.dockerfile
   DOCKERHUB_REPO: carlosrodlop/ooldap.debian.ub
 
 jobs:

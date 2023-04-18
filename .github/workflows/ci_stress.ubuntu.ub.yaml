@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - .docker/stress.ubuntu/**
+      - docker/stress.ubuntu/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -16,7 +16,7 @@ env:
   #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/stress.ubuntu.ub
-  DOCKERFILE: .docker/stress.ubuntu/stress.ubuntu.dockerfile
+  DOCKERFILE: docker/stress.ubuntu/stress.ubuntu.dockerfile
   DOCKERHUB_REPO: carlosrodlop/stress.ubuntu.ub
 
 jobs:
