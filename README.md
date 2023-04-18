@@ -42,6 +42,8 @@ Image for Ldap mock testing extending from [osixia/docker-openldap](https://gith
 
 * [![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
 
+![openldap-config](img/openldap-config.png)
+
 Another type of implementation on [jenkins-infra/mock-ldap](https://github.com/jenkins-infra/mock-ldap)
 
 ## Awesome
