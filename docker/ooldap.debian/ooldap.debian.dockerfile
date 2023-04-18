@@ -3,7 +3,7 @@ FROM osixia/openldap
 LABEL maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV LDAP_ORGANISATION="Example Ltd." \
-    LDAP_DOMAIN="example.org" \
+    LDAP_DOMAIN="jenkins.org" \
     DATA_VERSION="v2" \
     IMAGE_ROOT_PATH=docker/ooldap.debian
 
