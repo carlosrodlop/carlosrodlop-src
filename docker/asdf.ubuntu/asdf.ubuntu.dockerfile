@@ -26,7 +26,7 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV DOCKERFILE_PATH=.docker/asdf.ubuntu \
+ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
     ASDF_VERSION=v0.10.2 \
     USER=root
 
