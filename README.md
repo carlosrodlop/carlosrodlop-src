@@ -11,14 +11,15 @@
 
 Welcome to the Docker Library, my storage for reusable assets related to container engines.
 
-Since Docker runtime was deprecated in Kubernetes version 1.20]([Kubernetes is deprecating Docker as a container runtime after v1.20.](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/)), I made the `Makefile` to be compatible also with [containerd/nerdctl](https://github.com/containerd/nerdctl) container engine. (See [How To Replace Docker With nerdctl And Rancher Desktop - DevOps ToolKit](https://www.youtube.com/watch?v=evWPib0iNgY))
-
-## CI
+* Since Docker runtime was deprecated in Kubernetes version 1.20 ([Kubernetes is deprecating Docker as a container runtime after v1.20.](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/)), I made the `Makefile` to be compatible also with [containerd/nerdctl](https://github.com/containerd/nerdctl) container engine. (See [How To Replace Docker With nerdctl And Rancher Desktop - DevOps ToolKit](https://www.youtube.com/watch?v=evWPib0iNgY))
 
 * Docker images are uploaded to the following registries via GitHub Actions:
 
   * [Github](https://github.com/carlosrodlop?tab=packages&repo_name=docker-labs)
   * [DockerHub](https://hub.docker.com/u/carlosrodlop)
+
+* Copy the `.env.example` file to `.env` and edit the variables to your needs.
+* To pass additional Environment Variables during the execution of the container use `.docker/docker.env` file.
 
 ## Image Catalog
 
