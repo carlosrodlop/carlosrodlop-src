@@ -51,10 +51,10 @@ docker-dh-buildAndPush: check_envfile
 .PHONY: docker-dh-run
 docker-dh-run: ## Build a DockerHub Image (DHI) pased as parameter. Usage: DHI=base.ubuntu make docker-dh-run
 docker-dh-run: check_docker_envFile check_envfile
-	$(call print_title,Run image $(call getProperty,DHI) from DockerHub)
-	$(call getProperty,CER) run --name $(shell echo $(call getProperty,DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
+	$(call print_title,Run image $(call getEnvProperty,DHI) from DockerHub)
+	$(call getEnvProperty,CER) run --name $(shell echo $(call getEnvProperty,DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
 		$(RUN_OPTS) \
-		$(DH_USER)/$(shell echo $(call getProperty,DHI))
+		$(DH_USER)/$(shell echo $(call getEnvProperty,DHI))
 
 .PHONY: docker-gh-run
 docker-gh-run: ## Build a GitHub Image (GHI) pased as parameter. Usage: GHI=base.ubuntu make docker-gh-run
