@@ -1,32 +1,62 @@
-dn: cn=developer,dc=acme,dc=org
+dn: cn=developer-1,dc=acme,dc=org
 changetype: add
 objectclass: inetOrgPerson
-cn: developer
-givenname: developer
-sn: Developer
-displayname: Developer User
-mail: developer@gmail.com
+cn: developer-1
+givenname: developer-1
+sn: Developer 1
+displayname: Developer User 1
+mail: developer-1@gmail.com
 userpassword: developer_pass
 
-dn: cn=maintainer,dc=acme,dc=org
+dn: cn=developer-2,dc=acme,dc=org
 changetype: add
 objectclass: inetOrgPerson
-cn: maintainer
-givenname: maintainer
-sn: Maintainer
-displayname: Maintainer User
-mail: maintainer@gmail.com
-userpassword: maintainer_pass
+cn: developer-2
+givenname: developer-2
+sn: Developer 2
+displayname: Developer User 2
+mail: developer-2@gmail.com
+userpassword: developer_pass
 
-dn: cn=admin_gh,dc=acme,dc=org
+dn: cn=developer-3,dc=acme,dc=org
 changetype: add
 objectclass: inetOrgPerson
-cn: admin_gh
-givenname: admin_gh
-sn: AdminGithub
-displayname: Admin Github User
-mail: admin_gh@gmail.com
-userpassword: admin_gh_pass
+cn: developer-3
+givenname: developer-3
+sn: Developer 3
+displayname: Developer User 3
+mail: developer-3@gmail.com
+userpassword: developer_pass
+
+dn: cn=developer-4,dc=acme,dc=org
+changetype: add
+objectclass: inetOrgPerson
+cn: developer-4
+givenname: developer-4
+sn: Developer 4
+displayname: Developer User 4
+mail: developer-4@gmail.com
+userpassword: developer_pass
+
+dn: cn=admin_cbci-a,dc=acme,dc=org
+changetype: add
+objectclass: inetOrgPerson
+cn: admin_cbci-a
+givenname: admin_cbci-a
+sn: AdminCBCIA
+displayname: Admin CBCI A
+mail: admin_cbci-a@gmail.com
+userpassword: admin_pass
+
+dn: cn=admin_cbci-b,dc=acme,dc=org
+changetype: add
+objectclass: inetOrgPerson
+cn: admin_cbci-b
+givenname: admin_cbci-b
+sn: AdminCBCIB
+displayname: Admin CBCI B
+mail: admin_cbci-b@gmail.com
+userpassword: admin_pass
 
 dn: ou=Groups,dc=acme,dc=org
 changetype: add
@@ -43,10 +73,18 @@ changetype: add
 cn: Admins
 objectclass: groupOfUniqueNames
 uniqueMember: cn=admin_gh,dc=acme,dc=org
+uniqueMember: cn=admin_gh,dc=acme,dc=org
 
-dn: cn=Maintaners,ou=Groups,dc=acme,dc=org
+dn: cn=DevTeam1,ou=Groups,dc=acme,dc=org
 changetype: add
-cn: Maintaners
+cn: DevTeam1
 objectclass: groupOfUniqueNames
-uniqueMember: cn=maintainer,dc=acme,dc=org
-uniqueMember: cn=developer,dc=acme,dc=org
+uniqueMember: cn=developer-1,dc=acme,dc=org
+uniqueMember: cn=developer-2,dc=acme,dc=org
+
+dn: cn=DevTeam2,ou=Groups,dc=acme,dc=org
+changetype: add
+cn: DevTeam2
+objectclass: groupOfUniqueNames
+uniqueMember: cn=developer-3,dc=acme,dc=org
+uniqueMember: cn=developer-4,dc=acme,dc=org
