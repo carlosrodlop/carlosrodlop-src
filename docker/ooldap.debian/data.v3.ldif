@@ -72,8 +72,8 @@ dn: cn=Admins,ou=Groups,dc=acme,dc=org
 changetype: add
 cn: Admins
 objectclass: groupOfUniqueNames
-uniqueMember: cn=admin_gh,dc=acme,dc=org
-uniqueMember: cn=admin_gh,dc=acme,dc=org
+uniqueMember: cn=admin_cbci-a,dc=acme,dc=org
+uniqueMember: cn=admin_cbci-b,dc=acme,dc=org
 
 dn: cn=DevTeam1,ou=Groups,dc=acme,dc=org
 changetype: add
