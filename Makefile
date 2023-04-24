@@ -11,7 +11,8 @@ RUN_OPTS        := --env-file=docker/docker.env --rm -it  \
 		-v $(HOST_CODE_BASE):/root/labs \
 		-v $(HOME)/.aws:/root/.aws \
 		-v $(SECRETS_REPO)/files/sops/sops-age-key.txt:/root/.sops-age-key.txt \
-		-v $(PARENT_MKFILE):/root/.Makefile
+		-v $(PARENT_MKFILE):/root/.Makefile \
+		-p 389:389
 
 include $(PARENT_MKFILE)
 
@@ -34,10 +35,10 @@ endif
 .PHONY: docker-local-buildAndRun
 docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) pased as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
 docker-local-buildAndRun: check_docker_envFile check_envfile
-	$(call print_title,Build and Run $(call getEnvProperty,DF) locally)
-	$(call getEnvProperty,CER) build . --file docker/$(call getEnvProperty,DF)/$(call getEnvProperty,DF)dockerfile --tag local.$(DH_USER)/$(call getEnvProperty,DF):latest --tag local.$(DH_USER)/$(call getEnvProperty,DF):$(GIT_TAG)
-	$(call getEnvProperty,CER) run --name $(call getEnvProperty,DF)_$(shell echo $$RANDOM) $(RUN_OPTS) \
-		local.$(DH_USER)/$(call getEnvProperty,DF):latest
+	$(call print_title,Build and Run $(shell echo $(call getEnvProperty,DF)) locally)
+	$(call getEnvProperty,CER) build . --file docker/$(shell echo $(call getEnvProperty,DF))/$(shell echo $(call getEnvProperty,DF)).dockerfile --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):latest --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):$(GIT_TAG)
+	$(call getEnvProperty,CER) run --name $(shell echo $(call getEnvProperty,DF))_$(shell echo $$RANDOM) $(RUN_OPTS) \
+		-d local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):latest
 
 .PHONY: docker-dh-buildAndPush
 docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF)pased as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
@@ -45,7 +46,7 @@ docker-dh-buildAndPush: check_envfile
 	$(call print_title,Build and Push $(call getEnvProperty,DF) to DockerHub)
 	cat $(DH_SECRET) | $(call getEnvProperty,CER) login --username $(DH_USER) --password-stdin
 	$(call getEnvProperty,CER) build --file docker/$(call getEnvProperty,DF)/$(call getEnvProperty,DF).dockerfile --tag $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):latest --tag $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):$(GIT_TAG) .
-	$(call getEnvProperty,CER) push $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):$(shell git rev-parse --verify HEAD --short=5)
+	$(call getEnvProperty,CER) push $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):$(GIT_TAG)
 	$(call getEnvProperty,CER) push $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):latest
 
 .PHONY: docker-dh-run
@@ -75,7 +76,7 @@ docker-compose-run: check_docker_envFile
 docker-total-clean: ## Fully clean all docker images and containers
 docker-total-clean:
 	$(call print_title,Purge docker)
-	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then $(call getEnvProperty,CER) container stop $(shell $(call getEnvProperty,CER) container ls -aq) && $(call getEnvProperty,CER) container rm $(shell $(call getEnvProperty,CER) container ls -aq); fi
+	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then $(call getEnvProperty,CER) container stop $(shell $(call getEnvProperty,CER) container ls -aq) && $(call getEnvProperty,CER) container rm $(shell $(call getEnvProperty,CER) container ls -aq)); fi
 	if [ $(N_IMAGES_LAYERS) -gt 0 ]; then $(call getEnvProperty,CER) image rm -f $(shell $(call getEnvProperty,CER) image ls -q); fi
 	$(call getEnvProperty,CER) system prune --all --force --volumes
 
