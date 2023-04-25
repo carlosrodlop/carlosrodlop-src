@@ -17,7 +17,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/ooldap.debian.ub
   DOCKERFILE: docker/ooldap.debian/ooldap.debian.dockerfile
-  DOCKERHUB_REPO: carlosrodlop/ooldap.debian.ub
+  DOCKERHUB_REPO: carlosrodlop/ooldap.debian.v2.ub
 
 jobs:
   build-and-push-image:
