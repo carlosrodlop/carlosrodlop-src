@@ -43,11 +43,11 @@ docker-local-buildAndRun: check_docker_envFile check_envfile
 .PHONY: docker-dh-buildAndPush
 docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF)pased as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
 docker-dh-buildAndPush: check_envfile
-	$(call print_title,Build and Push $(call getEnvProperty,DF) to DockerHub)
-	cat $(DH_SECRET) | $(call getEnvProperty,CER) login --username $(DH_USER) --password-stdin
-	$(call getEnvProperty,CER) build --file docker/$(call getEnvProperty,DF)/$(call getEnvProperty,DF).dockerfile --tag $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):latest --tag $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):$(GIT_TAG) .
-	$(call getEnvProperty,CER) push $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):$(GIT_TAG)
-	$(call getEnvProperty,CER) push $(DH_USER)/$(call getEnvProperty,DF).$(LOCAL_BUILD_NODE):latest
+	$(call print_title,Build and Push $(shell echo $(call getEnvProperty,DF)) to DockerHub)
+	cat $(DH_SECRET) | $(shell echo $(call getEnvProperty,CER)) login --username $(DH_USER) --password-stdin
+	$(call getEnvProperty,CER) build --file docker/$(shell echo $(call getEnvProperty,DF))/$(shell echo $(call getEnvProperty,DF)).dockerfile --tag $(DH_USER)/$(shell echo$(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):latest --tag $(DH_USER)/$(shell echo $(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):$(GIT_TAG) .
+	$(call getEnvProperty,CER) push $(DH_USER)/$(shell echo $(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):$(GIT_TAG)
+	$(call getEnvProperty,CER) push $(DH_USER)/$(shell echo $(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):latest
 
 .PHONY: docker-dh-run
 docker-dh-run: ## Build a DockerHub Image (DHI) pased as parameter. Usage: DHI=base.ubuntu make docker-dh-run
@@ -55,6 +55,7 @@ docker-dh-run: check_docker_envFile check_envfile
 	$(call print_title,Run image $(call getEnvProperty,DHI) from DockerHub)
 	$(call getEnvProperty,CER) run --name $(shell echo $(call getEnvProperty,DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
 		$(RUN_OPTS) \
+		$(shell $(call getEnvProperty,EXTRA_RUN_OPTIONS)) \
 		$(DH_USER)/$(shell echo $(call getEnvProperty,DHI))
 
 .PHONY: docker-gh-run
