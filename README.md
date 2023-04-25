@@ -44,7 +44,14 @@ Image for Ldap mock testing extending from [osixia/docker-openldap](https://gith
 
 ![openldap-config](img/openldap-config.png)
 
-Another type of implementation on [jenkins-infra/mock-ldap](https://github.com/jenkins-infra/mock-ldap)
+#### Load Data
+
+1.- Port forward the service to localhost (e.g. `58331` port)
+2.- Add the users with the following command:
+
+```bash
+ldapadd -h localhost -p 58331 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
+```
 
 ## Awesome
 
