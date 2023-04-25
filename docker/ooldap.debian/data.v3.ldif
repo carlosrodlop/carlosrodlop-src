@@ -68,9 +68,9 @@ changetype: add
 objectclass: organizationalUnit
 ou: Users
 
-dn: cn=Admins,ou=Groups,dc=acme,dc=org
+dn: cn=CI_Admins,ou=Groups,dc=acme,dc=org
 changetype: add
-cn: Admins
+cn: CI_Admins
 objectclass: groupOfUniqueNames
 uniqueMember: cn=admin_cbci_a,dc=acme,dc=org
 uniqueMember: cn=admin_cbci_b,dc=acme,dc=org
