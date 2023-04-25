@@ -44,14 +44,16 @@ Image for Ldap mock testing extending from [osixia/docker-openldap](https://gith
 
 ![openldap-config](img/openldap-config.png)
 
-#### Load Data
+#### Alternative: Load Data via ldapadd
 
-1.- Port forward the service to localhost (e.g. `58331` port)
-2.- Add the users with the following command:
+* Do not copy data into `/container/service/slapd/assets/config/bootstrap/ldif`
+* Add the users/groups with the following command:
 
-```bash
-ldapadd -h localhost -p 58331 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
+```sh
+ldapadd -h localhost -p 389 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
 ```
+
+Tip: For K8s use port forwarding to access the LDAP server
 
 ## Awesome
 
