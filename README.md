@@ -47,7 +47,7 @@ Configuration examples:
 
 ![openldap-config](img/openldap-config.png)
 
-* Jenkins ([JCasC](https://www.jenkins.io/projects/jcasc/))
+* Jenkins ([JCasC](https://www.jenkins.io/projects/jcasc/)). It assumes `ldap-service` as the name of the service and `kube-system` as the namespace.
 
 ```yaml
 jenkins:
