@@ -25,24 +25,41 @@ Welcome to the Docker Library, my storage for reusable assets related to contain
 
 ### ASDF + ohmyz.sh
 
-Image for my demos with nice [Oh My Zsh](https://ohmyz.sh/) and tool installation via [asdf](https://asdf-vm.com/)
+[![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_asdf.alpine.ub.yaml) [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml)
 
-* [![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_asdf.alpine.ub.yaml)
-* [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml)
+Image for my demos with nice [Oh My Zsh](https://ohmyz.sh/) and tool installation via [asdf](https://asdf-vm.com/)
 
 ### Stress and Stress-ng
 
-Image for Load Testing including [stress](https://linux.die.net/man/1/stress) and [stress-ng](https://manpages.ubuntu.com/manpages/bionic/man1/stress-ng.1.html)
+[![Stress Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml)
 
-* [![Stress Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml)
+Image for Load Testing including [stress](https://linux.die.net/man/1/stress) and [stress-ng](https://manpages.ubuntu.com/manpages/bionic/man1/stress-ng.1.html)
 
 ### Osixia openldap + Data
 
+[![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
+
 Image for Ldap mock testing extending from [osixia/docker-openldap](https://github.com/osixia/docker-openldap). Ref [Build an OpenLDAP Docker Image That’s Populated With Users](https://betterprogramming.pub/ldap-docker-image-with-populated-users-3a5b4d090aa4)
 
-* [![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
+Configuration examples:
+
+* [JXExplorer](http://jxplorer.org/): Use for troubleshooting purposes. For Kubernetes use [[port-fowarding](https://www.weave.works/blog/kubectl-port-forward)
 
 ![openldap-config](img/openldap-config.png)
+
+* Jenkins ([JCasC](https://www.jenkins.io/projects/jcasc/))
+
+```yaml
+jenkins:
+  securityRealm:
+    ldap:
+      configurations:
+      - managerDN: "cn=admin,dc=acme,dc=org"
+        managerPasswordSecret: "admin"
+        rootDN: "dc=acme,dc=org"
+        server: "ldap-service.kube-system.svc.cluster.local"
+        userSearch: "cn={0}"
+```
 
 #### Alternative: Load Data via ldapadd
 
@@ -52,8 +69,6 @@ Image for Ldap mock testing extending from [osixia/docker-openldap](https://gith
 ```sh
 ldapadd -h localhost -p 389 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
 ```
-
-Tip: For K8s use port forwarding to access the LDAP server
 
 ## Awesome
 
