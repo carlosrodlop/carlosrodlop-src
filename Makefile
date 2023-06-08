@@ -24,7 +24,7 @@ GIT_TAG := $(shell git rev-parse --verify HEAD --short=5)
 
 #https://refine.dev/blog/docker-build-args-and-env-vars/#using-env-file
 .PHONY: check_docker_envFile
-check_docker_envFile: ## Check for the required KUBECONFIG environment variable
+check_docker_envFile: ## Check for the required DockerEnf File environment variable
 check_docker_envFile:
 ifneq ("$(wildcard docker/docker.env)","")
 else
@@ -33,7 +33,7 @@ else
 endif
 
 .PHONY: docker-local-buildAndRun
-docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) pased as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
+docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) passed as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
 docker-local-buildAndRun: check_docker_envFile check_envfile
 	$(call print_title,Build and Run $(shell echo $(call getEnvProperty,DF)) locally)
 	$(call getEnvProperty,CER) build . --file docker/$(shell echo $(call getEnvProperty,DF))/$(shell echo $(call getEnvProperty,DF)).dockerfile --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):latest --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):$(GIT_TAG)
@@ -41,7 +41,7 @@ docker-local-buildAndRun: check_docker_envFile check_envfile
 		-d local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):latest
 
 .PHONY: docker-dh-buildAndPush
-docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF)pased as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
+docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF) passed as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
 docker-dh-buildAndPush: check_envfile
 	$(call print_title,Build and Push $(shell echo $(call getEnvProperty,DF)) to DockerHub)
 	cat $(DH_SECRET) | $(shell echo $(call getEnvProperty,CER)) login --username $(DH_USER) --password-stdin
@@ -50,7 +50,7 @@ docker-dh-buildAndPush: check_envfile
 	$(call getEnvProperty,CER) push $(DH_USER)/$(shell echo $(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):latest
 
 .PHONY: docker-dh-run
-docker-dh-run: ## Build a DockerHub Image (DHI) pased as parameter. Usage: DHI=base.ubuntu make docker-dh-run
+docker-dh-run: ## Run a DockerHub Image (DHI) container passed as parameter. Usage: DHI=base.ubuntu make docker-dh-run
 docker-dh-run: check_docker_envFile check_envfile
 	$(call print_title,Run image $(call getEnvProperty,DHI) from DockerHub)
 	$(call getEnvProperty,CER) run --name $(shell echo $(call getEnvProperty,DHI) | cut -d ":" -f 1)_$(shell echo $$RANDOM) \
@@ -59,7 +59,7 @@ docker-dh-run: check_docker_envFile check_envfile
 		$(DH_USER)/$(shell echo $(call getEnvProperty,DHI))
 
 .PHONY: docker-gh-run
-docker-gh-run: ## Build a GitHub Image (GHI) pased as parameter. Usage: GHI=base.ubuntu make docker-gh-run
+docker-gh-run: ## Run a GitHub Image (GHI) container passed as parameter. Usage: GHI=base.ubuntu make docker-gh-run
 docker-gh-run: check_docker_envFile check_envfile
 	$(call print_title,Run image $(call getEnvProperty,GHI) from Github)
 	@cat $(GH_SECRET) | $(call getEnvProperty,CER) login ghcr.io --username $(GH_USER)  --password-stdin
