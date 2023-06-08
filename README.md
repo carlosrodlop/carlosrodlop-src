@@ -69,11 +69,3 @@ jenkins:
 ```sh
 ldapadd -h localhost -p 389 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
 ```
-
-## Awesome
-
-![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
-
-* [Awesome Docker Repos](https://github.com/stars/carlosrodlop/lists/docker)
-* [Docker - Awesome Software Architecture](https://awesome-architecture.com/devops/docker/docker/)
-* [nerdctl/command-reference](https://github.com/containerd/nerdctl/blob/main/docs/command-reference.md)
