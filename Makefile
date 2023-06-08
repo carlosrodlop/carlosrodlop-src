@@ -1,5 +1,5 @@
 MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-PARENT_MKFILE   := $(PARENT_REPO)/Makefile
+PARENT_MKFILE   := $(HOME)/.Makefile
 GH_USER 		:= $(USER)
 GH_REGISTRY 	:= ghcr.io/$(GH_USER)/docker-lib
 GH_SECRET   	:= $(SECRETS_REPO)/files/github/gh_token.txt
