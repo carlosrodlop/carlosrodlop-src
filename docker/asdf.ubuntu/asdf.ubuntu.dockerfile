@@ -44,6 +44,7 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
+    #Issue with jq: asdf list all jq ==> No compatible versions available (jq )
     #asdf plugin add jq && \
     asdf plugin add python && \
     asdf plugin add java && \

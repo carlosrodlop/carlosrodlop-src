@@ -2,6 +2,7 @@
 
 awscli 2.11.21
 gcloud 408.0.0
+#Issue with jq: asdf list all jq ==> No compatible versions available (jq )
 #jq 1.6
 python 3.11.3
 java adoptopenjdk-11.0.19+7
