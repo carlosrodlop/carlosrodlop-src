@@ -2,9 +2,9 @@
 
 awscli 2.11.21
 gcloud 408.0.0
-jq 1.6
+#jq 1.6
 python 3.11.3
-#java adoptopenjdk-11.0.19+7
+java adoptopenjdk-11.0.19+7
 age 1.1.0-rc.1
 
 # K8s tools

@@ -44,9 +44,9 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
-    asdf plugin add jq && \
+    #asdf plugin add jq && \
     asdf plugin add python && \
-    #asdf plugin add java && \
+    asdf plugin add java && \
     asdf plugin add age && \
     asdf plugin add eksctl && \
     asdf plugin add helm && \
