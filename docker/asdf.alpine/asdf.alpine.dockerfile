@@ -9,14 +9,14 @@ RUN apk add --virtual .asdf-deps --no-cache bash curl git \
     patch gcc make g++ zlib-dev bzip2 libffi
 SHELL ["/bin/bash", "-l", "-c"]
 RUN adduser -s /bin/bash -h /asdf -D asdf
-ENV PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 
-USER asdf
-WORKDIR /asdf
+USER root
+WORKDIR /root
 
 ENV DOCKERFILE_PATH=docker/asdf.alpine \
     COMMON_PATH=docker/asdf \
-    ASDF_VERSION=v0.10.2 
+    ASDF_VERSION=v0.10.2 \
+    PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 
 COPY ${COMMON_PATH}/.tool-versions .tool-versions
 
