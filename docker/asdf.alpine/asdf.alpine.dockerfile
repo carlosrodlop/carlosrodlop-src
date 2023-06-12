@@ -19,7 +19,7 @@ ENV DOCKERFILE_PATH=docker/asdf.alpine \
     ASDF_VERSION=v0.10.2 \
     PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 
-COPY ${COMMON_PATH}/.tool-versions .tool-versions
+COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
     echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \

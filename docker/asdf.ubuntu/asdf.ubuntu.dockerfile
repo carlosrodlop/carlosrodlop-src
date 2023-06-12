@@ -35,7 +35,7 @@ WORKDIR /${USER}
 
 COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
 COPY ${COMMON_PATH}/.profile .profile
-COPY ${COMMON_PATH}/.tool-versions .tool-versions
+COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 COPY ${COMMON_PATH}/.Makefile .Makefile
 
 RUN mkdir .antigen && \
