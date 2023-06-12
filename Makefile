@@ -6,13 +6,10 @@ GH_SECRET   	:= $(SECRETS_REPO)/files/github/gh_token.txt
 DH_USER 		:= $(USER)
 DH_SECRET   	:= $(SECRETS_REPO)/files/dockerhub/dh_secrets.txt
 HOST_CODE_BASE	:= $(GITHUB)/$(USER)
-RUN_OPTS        := --env-file=docker/docker.env --rm -it  \
-		--cpus=4 --memory=16g --memory-reservation=14g \
-		-v $(HOST_CODE_BASE):/root/labs \
-		-v $(HOME)/.aws:/root/.aws \
-		-v $(SECRETS_REPO)/files/sops/sops-age-key.txt:/root/.sops-age-key.txt \
-		-v $(PARENT_MKFILE):/root/.Makefile \
-		-p 389:389
+RUN_OPTS        := --env-file=docker/docker.env --rm -it \
+					-v $(HOST_CODE_BASE):/root/labs \
+					-v $(HOME)/.aws:/root/.aws \
+					-v $(SECRETS_REPO)/files/sops/sops-age-key.txt:/root/.sops-age-key.txt
 
 include $(PARENT_MKFILE)
 
@@ -22,19 +19,20 @@ N_IMAGES_LAYERS := $(shell $(call getEnvProperty,CER) image ls -q | wc -l)
 # For tagging images uniquely by change
 GIT_TAG := $(shell git rev-parse --verify HEAD --short=5)
 
+.PHONY: update_parent_mkfile
+update_parent_mkfile: ## Update Parent Makefile to be used 
+update_parent_mkfile:
+	cp $(PARENT_MKFILE) docker/asdf/
+
 #https://refine.dev/blog/docker-build-args-and-env-vars/#using-env-file
 .PHONY: check_docker_envFile
 check_docker_envFile: ## Check for the required DockerEnf File environment variable
 check_docker_envFile:
-ifneq ("$(wildcard docker/docker.env)","")
-else
-	@echo Error docker/docker.env file does not exist and it is required
-	@exit 1
-endif
+	$(call exitsFile,docker/docker.env)
 
 .PHONY: docker-local-buildAndRun
 docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) passed as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
-docker-local-buildAndRun: check_docker_envFile check_envfile
+docker-local-buildAndRun: check_docker_envFile check_envfile update_parent_mkfile
 	$(call print_title,Build and Run $(shell echo $(call getEnvProperty,DF)) locally)
 	$(call getEnvProperty,CER) build . --file docker/$(shell echo $(call getEnvProperty,DF))/$(shell echo $(call getEnvProperty,DF)).dockerfile --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):latest --tag local.$(DH_USER)/$(shell echo $(call getEnvProperty,DF)):$(GIT_TAG)
 	$(call getEnvProperty,CER) run --name $(shell echo $(call getEnvProperty,DF))_$(shell echo $$RANDOM) $(RUN_OPTS) \
@@ -42,7 +40,7 @@ docker-local-buildAndRun: check_docker_envFile check_envfile
 
 .PHONY: docker-dh-buildAndPush
 docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF) passed as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
-docker-dh-buildAndPush: check_envfile
+docker-dh-buildAndPush: check_docker_envFile check_envfile update_parent_mkfile
 	$(call print_title,Build and Push $(shell echo $(call getEnvProperty,DF)) to DockerHub)
 	cat $(DH_SECRET) | $(shell echo $(call getEnvProperty,CER)) login --username $(DH_USER) --password-stdin
 	$(call getEnvProperty,CER) build --file docker/$(shell echo $(call getEnvProperty,DF))/$(shell echo $(call getEnvProperty,DF)).dockerfile --tag $(DH_USER)/$(shell echo$(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):latest --tag $(DH_USER)/$(shell echo $(call getEnvProperty,DF)).$(shell echo $(call getEnvProperty,LOCAL_BUILD_NODE)):$(GIT_TAG) .

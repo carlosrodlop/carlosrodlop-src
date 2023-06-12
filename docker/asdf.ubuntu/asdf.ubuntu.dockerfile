@@ -27,14 +27,16 @@ RUN apt-get update -y && \
     rm -rf /var/lib/apt/lists/*
 
 ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
+    COMMON_PATH=docker/asdf \
     ASDF_VERSION=v0.10.2 \
     USER=root
 
 WORKDIR /${USER}
 
 COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
-COPY ${DOCKERFILE_PATH}/.profile .profile
-COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
+COPY ${COMMON_PATH}/.profile .profile
+COPY ${COMMON_PATH}/.tool-versions .tool-versions
+COPY ${COMMON_PATH}/.Makefile .Makefile
 
 RUN mkdir .antigen && \
     curl -L git.io/antigen > .antigen/antigen.zsh && \
