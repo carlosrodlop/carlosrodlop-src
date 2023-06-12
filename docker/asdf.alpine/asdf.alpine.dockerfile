@@ -3,11 +3,11 @@
 FROM alpine:3.17
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
-SHELL ["/bin/bash", "-l", "-c"]
 
 #https://pkgs.alpinelinux.org/packages
 RUN apk add --virtual .asdf-deps --no-cache bash curl git \
     patch gcc make g++ zlib-dev bzip2 libffi
+SHELL ["/bin/bash", "-l", "-c"]
 
 #RUN adduser -s /bin/bash -h /asdf -D asdf
 
