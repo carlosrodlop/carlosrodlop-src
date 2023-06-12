@@ -14,21 +14,33 @@ ENV PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 USER asdf
 WORKDIR /asdf
 
-ENV IMAGE_ROOT_PATH=docker/asdf.alpine \
-    ASDF_VERSION=v0.10.2
+ENV DOCKERFILE_PATH=docker/asdf.alpine \
+    COMMON_PATH=docker/asdf \
+    ASDF_VERSION=v0.10.2 
 
-COPY ${IMAGE_ROOT_PATH}/.tool-versions .tool-versions
+COPY ${COMMON_PATH}/.tool-versions .tool-versions
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
     echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
     echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.profile && \
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
-    #asdf plugin add gcloud && \
-    asdf plugin add jq && \
-    asdf plugin add yq && \
-    #asdf plugin add python && \
+    asdf plugin add gcloud && \
+    #Issue with jq: asdf list all jq ==> No compatible versions available (jq )
+    #asdf plugin add jq && \
+    asdf plugin add python && \
+    asdf plugin add java && \
     asdf plugin add age && \
+    asdf plugin add eksctl && \
+    asdf plugin add helm && \
+    asdf plugin add helm-diff && \
+    asdf plugin add helmfile && \
+    asdf plugin add k9s && \
+    asdf plugin add kubectl && \
+    asdf plugin add velero && \
+    asdf plugin add kubectx && \
+    asdf plugin add terraform && \
+    asdf plugin add terraform-docs && \
     asdf install
 
 ENTRYPOINT ["/bin/sh"]
