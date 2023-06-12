@@ -18,6 +18,9 @@ Welcome to the Docker Library, my storage for reusable assets related to contain
 - Copy the `.env.example` file to `.env` and edit the variables to your needs.
 - To pass additional Environment Variables during the execution of the container use `.docker/docker.env` file.
 
+| Documentation | [References](https://github.com/carlosrodlop/carlosrodlop-docs#docker) |
+| ------------- | ------------- |
+
 ## Image Catalog
 
 ### ASDF + ohmyz.sh
