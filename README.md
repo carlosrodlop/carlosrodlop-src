@@ -29,19 +29,19 @@
 
 ### ASDF + ohmyz.sh
 
-[![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_asdf.alpine.ub.yaml) [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.ub.yaml)
+[![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_asdf.alpine.yaml) [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.yaml)
 
 Image for my demos with nice [Oh My Zsh](https://ohmyz.sh/) and tool installation via [asdf](https://asdf-vm.com/)
 
 ### Stress and Stress-ng
 
-[![Stress Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.ub.yaml)
+[![Stress Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_stress.ubuntu.yaml)
 
 Image for Load Testing including [stress](https://linux.die.net/man/1/stress) and [stress-ng](https://manpages.ubuntu.com/manpages/bionic/man1/stress-ng.1.html)
 
 ### Osixia openldap + Data
 
-[![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.ub.yaml)
+[![Oxia OpenLdap](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_ooldap.debian.yaml)
 
 Image for Ldap mock testing extending from [osixia/docker-openldap](https://github.com/osixia/docker-openldap). Ref [Build an OpenLDAP Docker Image That’s Populated With Users](https://betterprogramming.pub/ldap-docker-image-with-populated-users-3a5b4d090aa4)
 

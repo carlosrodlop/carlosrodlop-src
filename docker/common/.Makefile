@@ -24,7 +24,7 @@ define getTFValue
 endef
 
 define getEnvProperty
-	$(shell echo $(shell cat .env | grep $(1) | cut -d'=' -f2 | xargs))
+	$(shell cat .env | grep $(1) | cut -d'=' -f2 | xargs)
 endef
 
 define exitsEnvVariable
