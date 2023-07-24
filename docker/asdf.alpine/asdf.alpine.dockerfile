@@ -15,7 +15,7 @@ USER root
 WORKDIR /root
 
 ENV DOCKERFILE_PATH=docker/asdf.alpine \
-    COMMON_PATH=docker/asdf \
+    COMMON_PATH=docker/common \
     ASDF_VERSION=v0.10.2 \
     PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
 
