@@ -1,5 +1,5 @@
 #https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-name: ASDF ubuntu, Ubuntu Node
+name: ASDF alpine, Ubuntu Node
 
 # Controls when the action will run.
 on:
@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - docker/asdf.ubuntu/**
+      - docker/asdf.alpine/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,9 +15,9 @@ on:
 env:
   #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/asdf.ubuntu.ub
-  DOCKERFILE: docker/asdf.ubuntu/asdf.ubuntu.dockerfile
-  DOCKERHUB_REPO: carlosrodlop/asdf.ubuntu.ub
+  IMAGE_NAME: ${{ github.repository }}/asdf.alpine.x86
+  DOCKERFILE: docker/asdf.alpine/asdf.alpine.dockerfile
+  DOCKERHUB_REPO: carlosrodlop/asdf.alpine.x86
 
 jobs:
   build-and-push-image:
@@ -59,8 +59,6 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-            # set latest tag for default branch
-            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3

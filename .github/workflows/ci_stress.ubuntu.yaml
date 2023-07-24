@@ -15,9 +15,9 @@ on:
 env:
   #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/stress.ubuntu.ub
+  IMAGE_NAME: ${{ github.repository }}/stress.ubuntu.x86
   DOCKERFILE: docker/stress.ubuntu/stress.ubuntu.dockerfile
-  DOCKERHUB_REPO: carlosrodlop/stress.ubuntu.ub
+  DOCKERHUB_REPO: carlosrodlop/stress.ubuntu.x86
 
 jobs:
   build-and-push-image:

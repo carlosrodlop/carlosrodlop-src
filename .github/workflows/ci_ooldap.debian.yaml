@@ -15,9 +15,9 @@ on:
 env:
   #*.ub = Build node is Ubuntu
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/ooldap.debian.ub
+  IMAGE_NAME: ${{ github.repository }}/ooldap.debian.x86
   DOCKERFILE: docker/ooldap.debian/ooldap.debian.dockerfile
-  DOCKERHUB_REPO: carlosrodlop/ooldap.debian.v2.ub
+  DOCKERHUB_REPO: carlosrodlop/ooldap.debian.v2.x86
 
 jobs:
   build-and-push-image:
