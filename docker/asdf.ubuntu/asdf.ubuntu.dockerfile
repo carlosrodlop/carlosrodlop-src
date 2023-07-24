@@ -33,10 +33,12 @@ ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
 
 WORKDIR /${USER}
 
-COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
+#Common Resources
 COPY ${COMMON_PATH}/.profile .profile
-COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 COPY ${COMMON_PATH}/.Makefile .Makefile
+#Specific Resources
+COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
+COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN mkdir .antigen && \
     curl -L git.io/antigen > .antigen/antigen.zsh && \
