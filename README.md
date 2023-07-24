@@ -19,9 +19,13 @@
 - Copy the `.env.example` file to `.env` and edit the variables to your needs.
 - To pass additional Environment Variables during the execution of the container use `.docker/docker.env` file.
 
-
-
 ## Image Catalog
+
+- Naming convention: `<image-name>.<image-distro>.<build-arch-type>`
+  - `<build-arch-type>`: `m1` ([ARM64](https://apple.stackexchange.com/a/451240)) vs `x86`
+    - Why? [Docker on M1 Max - Horrible Performance](https://www.reddit.com/r/docker/comments/qlrn3s/docker_on_m1_max_horrible_performance/), running x86 Image built into a M1 host requires `--platform linux/amd64` is Despite it, the performance won't be good. Solutions:
+    - As Base Image [use Arm Docker images instead of default x86/amd64](https://dev.to/oben/apple-silicon-mac-m1m2-how-to-deal-with-slow-docker-performance-58n0)
+    - Build the image from source in the M1 host.
 
 ### ASDF + ohmyz.sh
 
@@ -43,11 +47,11 @@ Image for Ldap mock testing extending from [osixia/docker-openldap](https://gith
 
 Configuration examples:
 
-* [JXExplorer](http://jxplorer.org/): Use for troubleshooting purposes. For Kubernetes use [[port-fowarding](https://www.weave.works/blog/kubectl-port-forward)
+- [JXExplorer](http://jxplorer.org/): Use for troubleshooting purposes. For Kubernetes use [[port-fowarding](https://www.weave.works/blog/kubectl-port-forward)
 
 ![openldap-config](img/openldap-config.png)
 
-* Jenkins ([JCasC](https://www.jenkins.io/projects/jcasc/)). It assumes `ldap-service` as the name of the service and `kube-system` as the namespace.
+- Jenkins ([JCasC](https://www.jenkins.io/projects/jcasc/)). It assumes `ldap-service` as the name of the service and `kube-system` as the namespace.
 
 ```yaml
 jenkins:
@@ -63,8 +67,8 @@ jenkins:
 
 #### Alternative: Load Data via ldapadd
 
-* Do not copy data into `/container/service/slapd/assets/config/bootstrap/ldif`
-* Add the users/groups with the following command:
+- Do not copy data into `/container/service/slapd/assets/config/bootstrap/ldif`
+- Add the users/groups with the following command:
 
 ```sh
 ldapadd -h localhost -p 389 -c -x -D cn=admin,dc=acme,dc=org -W -f data.v3.ldif
