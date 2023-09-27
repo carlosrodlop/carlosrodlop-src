@@ -5,3 +5,6 @@ reports
 .docker/*/v_kube/config
 *.env
 !*.env.example
+# log files
+*.log
+*.logs

@@ -11,13 +11,11 @@ DHI := $(shell echo $(call getEnvProperty,DHI))
 DH_ORG := $(shell echo $(call getEnvProperty,DH_ORG))
 DH_SECRET := $(shell echo $(call getEnvProperty,DH_SECRET))
 GHI := $(shell echo $(call getEnvProperty,GHI))
-GH_ORG := $(shell echo $(call getEnvProperty,GH_ORG)) 
+GH_ORG := $(shell echo $(call getEnvProperty,GH_ORG))
 GH_REGISTRY := $(shell echo $(call getEnvProperty,GH_REGISTRY)) 
 GH_SECRET := $(shell echo $(call getEnvProperty,GH_SECRET))
-RUN_OPTS        := --env-file=docker/docker.env --rm -it \
-					-v $(shell echo $(call getEnvProperty,CODE_BASE)):/root/labs \
-					-v $(HOME)/.aws:/root/.aws \
-					$(shell echo $(call getEnvProperty,RUN_OPTS))
+RUN_OPTS  := --env-file=docker/docker.env --rm -it \
+			$(shell echo $(call getEnvProperty,RUN_OPTS))
 # Existing container data
 N_CONTAINER_RUNNING := $(shell $(CER) container ls -aq | wc -l)
 N_IMAGES_LAYERS := $(shell $(CER) image ls -q | wc -l)
@@ -40,7 +38,7 @@ docker-local-buildAndRun: check_docker_envFile check_envfile
 		local.$(DH_ORG)/$(DF)
 
 .PHONY: docker-dh-buildAndPush
-docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF) passed as parameter. Usage: (DF)=asdf.ubuntumake docker-dh-buildAndPush
+docker-dh-buildAndPush: ## Build and Push to DockerHub the docker configuration (DF) passed as parameter. Usage: (DF)=asdf.ubuntu make docker-dh-buildAndPush
 docker-dh-buildAndPush: check_docker_envFile check_envfile
 	$(call print_title,Build and Push $(DF) to DockerHub)
 	@cat $(DH_SECRET) | $(shell echo $(CER) login --username $(DH_ORG) --password-stdin)
@@ -75,10 +73,10 @@ docker-compose-run: check_docker_envFile
 docker-total-clean: ## Fully clean all docker images and containers
 docker-total-clean:
 	$(call print_title,Purge docker)
-	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then $(CER) container stop $(shell $(CER) container ls -aq) && $(CER) container rm $(shell $(CER) container ls -aq); fi
-	if [ $(N_IMAGES_LAYERS) -gt 0 ]; then $(CER) image rm -f $(shell $(CER) image ls -q); fi
-	$(CER) system prune --force
-	$(CER) volume prune --force
+	if [ $(N_CONTAINER_RUNNING) -gt 0 ]; then $(CER) container stop $(shell $(CER) container ls -aq) || true && $(CER) container rm $(shell $(CER) container ls -aq) || true; fi
+	if [ $(N_IMAGES_LAYERS) -gt 0 ]; then $(CER) image rm -f $(shell $(CER) image ls -q) || true; fi
+	$(CER) system prune --all --force || true
+	$(CER) volume prune --all --force || true
 
 .PHONY: sast-scan-all
 sast-scan-all: ## SAST scan from https://slscan.io/en/latest/ for the root
