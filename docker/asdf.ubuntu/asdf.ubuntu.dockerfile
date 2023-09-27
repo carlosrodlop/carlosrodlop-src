@@ -11,24 +11,13 @@ RUN apt-get update -y && \
     make build-essential libssl-dev zlib1g-dev \
     libbz2-dev libreadline-dev libsqlite3-dev llvm \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-    git \
-    zsh \
-    unzip \
-    gnupg \
-    gpg-agent \
-    parallel \
-    vim \
-    wget \
-    less \
-    ca-certificates \
-    openssh-client \
-    curl && \
+    git zsh zip unzip gnupg gpg-agent parallel vim wget less ca-certificates openssh-client curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
     COMMON_PATH=docker/common \
-    ASDF_VERSION=v0.10.2 \
+    ASDF_VERSION=v0.11.3 \
     USER=root
 
 WORKDIR /${USER}
@@ -48,7 +37,6 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
-    #Issue with jq: asdf list all jq ==> No compatible versions available (jq )
     #asdf plugin add jq && \
     asdf plugin add python && \
     asdf plugin add java && \
