@@ -10,7 +10,7 @@
 ![GitHub Latest Release)](https://img.shields.io/github/v/release/carlosrodlop/terraform-lib?logo=github) ![GitHub Issues](https://img.shields.io/github/issues/carlosrodlop/docker-lib?logo=github) [![gitleaks badge](https://img.shields.io/badge/protected%20by-gitleaks-blue)](https://github.com/zricethezav/gitleaks#pre-commit) [![gitsecrets](https://img.shields.io/badge/protected%20by-gitsecrets-blue)](https://github.com/awslabs/git-secrets) [![anchore](https://img.shields.io/badge/scan%20by-anchore-blue)](https://github.com/anchore/scan-action) [![mdLinkChecker](https://github.com/carlosrodlop/docker-lib/actions/workflows/mdLinkChecker.yml/badge.svg)](https://github.com/carlosrodlop/docker-lib/actions/workflows/mdLinkChecker.yml)
 
 | [References](https://github.com/carlosrodlop/carlosrodlop-docs#docker) |
-| ------------- |
+| ---------------------------------------------------------------------- |
 
 - Since Docker runtime was deprecated in Kubernetes version 1.20 ([Kubernetes is deprecating Docker as a container runtime after v1.20.](https://kubernetes.io/blog/2020/12/02/dont-panic-kubernetes-and-docker/)), I made the `Makefile` to be compatible also with [containerd/nerdctl](https://github.com/containerd/nerdctl) container engine. (See [How To Replace Docker With nerdctl And Rancher Desktop - DevOps ToolKit](https://www.youtube.com/watch?v=evWPib0iNgY))
 - Docker images are uploaded to the following registries via GitHub Actions:
@@ -58,11 +58,11 @@ jenkins:
   securityRealm:
     ldap:
       configurations:
-      - managerDN: "cn=admin,dc=acme,dc=org"
-        managerPasswordSecret: "admin"
-        rootDN: "dc=acme,dc=org"
-        server: "ldap-service.kube-system.svc.cluster.local"
-        userSearch: "cn={0}"
+        - managerDN: "cn=admin,dc=acme,dc=org"
+          managerPasswordSecret: "admin"
+          rootDN: "dc=acme,dc=org"
+          server: "ldap-service.NAMESPACE_EXAMPLE.svc.cluster.local"
+          userSearch: "cn={0}"
 ```
 
 #### Alternative: Load Data via ldapadd
