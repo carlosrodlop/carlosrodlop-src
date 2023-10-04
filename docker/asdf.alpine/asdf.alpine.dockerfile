@@ -4,29 +4,26 @@ FROM alpine:3.17
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
+ENV DOCKERFILE_PATH=docker/asdf.alpine \
+    COMMON_PATH=docker/common \
+    ASDF_VERSION=v0.10.2 \
+    USER=asdf
+
 #https://pkgs.alpinelinux.org/packages
 RUN apk add --virtual .asdf-deps --no-cache bash curl git \
     patch gcc make g++ zlib-dev bzip2 libffi
 SHELL ["/bin/bash", "-l", "-c"]
 
-#RUN adduser -s /bin/bash -h /asdf -D asdf
+RUN adduser -s /bin/bash -h /home/${USER} -D ${USER}
 
-USER root
-WORKDIR /root
+USER ${USER}
+WORKDIR /home/${USER}
 
-ENV DOCKERFILE_PATH=docker/asdf.alpine \
-    COMMON_PATH=docker/common \
-    ASDF_VERSION=v0.10.2 \
-    PATH="${PATH}:/asdf/.asdf/shims:/asdf/.asdf/bin"
+ENV PATH="${PATH}:/home/${USER}/.asdf/shims:/home/${USER}/.asdf/bin"
 
-COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
+COPY --chown=${USER} ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
-    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc && \
-    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.profile && \
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf install
-
-ENTRYPOINT ["/bin/bash"]
-

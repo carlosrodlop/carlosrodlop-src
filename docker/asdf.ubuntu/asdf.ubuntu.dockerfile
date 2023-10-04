@@ -3,6 +3,15 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
+ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
+    COMMON_PATH=docker/common \
+    ASDF_VERSION=v0.11.3 \
+    USER=asdf-user \
+    GROUP=asdf-group
+
+ARG UID=1000
+ARG GID=1000
+
 #https://packages.ubuntu.com/
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends software-properties-common && \
@@ -15,29 +24,29 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
-    COMMON_PATH=docker/common \
-    ASDF_VERSION=v0.11.3 \
-    USER=root
+#https://nickjanetakis.com/blog/running-docker-containers-as-a-non-root-user-with-a-custom-uid-and-gid
+RUN groupadd -g "${GID}" ${GROUP}  \
+    && useradd --create-home --no-log-init -u "${UID}" -g "${GID}" ${USER}
 
-WORKDIR /${USER}
+USER ${USER}
+
+RUN mkdir /home/${USER}/.antigen && \
+    curl -L git.io/antigen > /home/${USER}/.antigen/antigen.zsh && \
+    cat /home/${USER}/.profile >> ~/.zshrc
+
+WORKDIR /home/${USER}
 
 #Common Resources
-COPY ${COMMON_PATH}/.profile .profile
-COPY ${COMMON_PATH}/.Makefile .Makefile
+COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
+COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.Makefile .Makefile
 #Specific Resources
-COPY ${DOCKERFILE_PATH}/.zshrc .zshrc
-COPY ${DOCKERFILE_PATH}/.tool-versions .tool-versions
-
-RUN mkdir .antigen && \
-    curl -L git.io/antigen > .antigen/antigen.zsh && \
-    cat ".profile" >> ~/.zshrc
+COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/.zshrc .zshrc
+COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf && \
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf plugin add gcloud && \
-    #asdf plugin add jq && \
     asdf plugin add python && \
     asdf plugin add java && \
     asdf plugin add age && \
@@ -52,18 +61,12 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     asdf plugin add terraform && \
     asdf plugin add terraform-docs && \
     asdf install && \
-    #installaing yq from mikefarah
-    #https://github.com/mikefarah/yq#latest-version
-    wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && \
-    chmod +x /usr/bin/yq && \
     #installing robusta cli
     pip install -U robusta-cli --no-cache
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
-RUN source /${USER}/.asdf/asdf.sh && \
-    rm -f /${USER}/.asdf/shims/* && \
+RUN source /home/${USER}/.asdf/asdf.sh && \
+    rm -f /home/${USER}/.asdf/shims/* && \
     asdf reshim
-
-WORKDIR /root/labs
 
 ENTRYPOINT ["/bin/zsh"]
