@@ -7,15 +7,18 @@ DBUILD_ARCH := $(shell echo $(call getEnvProperty,DBUILD_ARCH))
 CER := $(shell echo $(call getEnvProperty,CER))
 DF := $(shell echo $(call getEnvProperty,DF))
 DCF := $(shell echo $(call getEnvProperty,DCF))
-DHI := $(shell echo $(call getEnvProperty,DHI))
 DH_ORG := $(shell echo $(call getEnvProperty,DH_ORG))
 DH_SECRET := $(shell echo $(call getEnvProperty,DH_SECRET))
-GHI := $(shell echo $(call getEnvProperty,GHI))
 GH_ORG := $(shell echo $(call getEnvProperty,GH_ORG))
 GH_REGISTRY := $(shell echo $(call getEnvProperty,GH_REGISTRY)) 
 GH_SECRET := $(shell echo $(call getEnvProperty,GH_SECRET))
 RUN_OPTS  := --env-file=docker/docker.env --rm -it \
 			$(shell echo $(call getEnvProperty,RUN_OPTS))
+
+#DockerHub image. Ref https://hub.docker.com/u/carlosrodlop (e.g. asdf.ubuntu.m1, stress.ubuntu.ub)
+DHI := $(DF).$(DBUILD_ARCH)
+#GitHub Package image
+GHI := $(DHI):main
 # Existing container data
 N_CONTAINER_RUNNING := $(shell $(CER) container ls -aq | wc -l)
 N_IMAGES_LAYERS := $(shell $(CER) image ls -q | wc -l)
@@ -29,7 +32,7 @@ check_docker_envFile:
 	$(call exitsFile,docker/docker.env)
 
 .PHONY: docker-local-buildAndRun
-docker-local-buildAndRun: ## Build and Run locally the Docker configuration (DF) passed as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
+docker-local-buildAndRun: ## Build and Run locally the docker configuration (DF) passed as parameter. Usage: DF=asdf.ubuntu make docker-local-buildAndRun
 docker-local-buildAndRun: check_docker_envFile check_envfile
 	$(call print_title,Build and Run $(DF) locally)
 	$(CER) build . --file docker/$(DF)/$(DF).dockerfile --tag local.$(DH_ORG)/$(DF):latest --tag local.$(DH_ORG)/$(DF):$(GIT_TAG)
