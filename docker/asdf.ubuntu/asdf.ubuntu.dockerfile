@@ -65,8 +65,8 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
     pip install -U robusta-cli --no-cache
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
-RUN source /home/${USER}/.asdf/asdf.sh && \
-    rm -f /home/${USER}/.asdf/shims/* && \
+RUN source .asdf/asdf.sh && \
+    rm -f .asdf/shims/* && \
     asdf reshim
 
 ENTRYPOINT ["/bin/zsh"]
