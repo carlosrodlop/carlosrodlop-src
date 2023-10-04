@@ -19,8 +19,7 @@ ARG GID=1000
 
 RUN apk --no-cache add openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
-#RUN addgroup -S ${GROUP} && adduser -S ${USER} -G ${GROUP}
-
+#https://gist.github.com/utkuozdemir/3380c32dfee472d35b9c3e39bc72ff01
 RUN addgroup -g ${GID} ${GROUP} && \
     adduser --shell /sbin/nologin --disabled-password \
     --uid ${UID} --ingroup ${GROUP} ${USER}
