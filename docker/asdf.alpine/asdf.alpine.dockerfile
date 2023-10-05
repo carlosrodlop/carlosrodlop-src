@@ -27,3 +27,8 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git $HOME/.asdf && \
     source .asdf/asdf.sh && \
     asdf plugin add awscli && \
     asdf install
+
+# https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
+RUN source .asdf/asdf.sh && \
+    rm -rf .asdf/shims/* && \
+    asdf reshim
