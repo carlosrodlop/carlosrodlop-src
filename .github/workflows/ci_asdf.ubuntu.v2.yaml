@@ -19,3 +19,6 @@ jobs:
       image_name: ${{ github.repository }}/asdf.ubuntu.x86
       dockerfile: docker/asdf.ubuntu/asdf.ubuntu.dockerfile
       dockerhub_repo: carlosrodlop/asdf.ubuntu.x86
+    secrets:
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}

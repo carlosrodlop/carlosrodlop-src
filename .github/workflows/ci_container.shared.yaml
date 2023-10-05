@@ -14,6 +14,11 @@ on:
       dockerhub_repo:
         required: true
         type: string
+    secrets:
+      docker_username:
+        required: true
+      docker_password:
+        required: true
 
 env:
   #*.ub = Build node is Ubuntu
@@ -40,8 +45,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.docker_username }}
+          password: ${{ secrets.docker_password }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -70,13 +75,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Docker Scout
-        id: docker-scout
-        # if: ${{ github.event_name == 'pull_request' }}
-        uses: docker/scout-action@dd36f5b0295baffa006aa6623371f226cc03e506
-        with:
-          command: cves
-          image: ${{ steps.meta.outputs.tags }}
-          only-severities: critical,high
-          exit-code: true
