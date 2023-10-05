@@ -64,7 +64,7 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
 
 # https://github.com/asdf-vm/asdf/issues/1115#issuecomment-995026427
 RUN source .asdf/asdf.sh && \
-    rm -f .asdf/shims/* && \
+    rm -rf .asdf/shims/* && \
     asdf reshim
 
 # Not using asdf install because it is not working for required installations
