@@ -1,4 +1,3 @@
-#https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
 name: ASDF ubuntu, Ubuntu Node v2
 
 # Controls when the action will run.
