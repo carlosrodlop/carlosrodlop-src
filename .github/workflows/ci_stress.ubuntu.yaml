@@ -12,13 +12,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  #*.ub = Build node is Ubuntu
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/stress.ubuntu.x86
-  DOCKERFILE: docker/stress.ubuntu/stress.ubuntu.dockerfile
-  DOCKERHUB_REPO: carlosrodlop/stress.ubuntu.x86
-
 jobs:
   docker:
     uses: carlosrodlop/docker-lib/.github/workflows/_ci_container.shared.yaml@main
