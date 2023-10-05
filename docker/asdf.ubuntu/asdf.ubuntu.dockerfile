@@ -3,11 +3,14 @@ SHELL ["/bin/bash", "-c"]
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
-ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
+ENV DEBIAN_FRONTEND=noninteractive \
+    DOCKERFILE_PATH=docker/asdf.ubuntu \
     COMMON_PATH=docker/_common \
     ASDF_VERSION=v0.11.3 \
     USER=asdf-user \
-    GROUP=asdf-group
+    GROUP=asdf-group \
+    YQ_VERSION=v4.35.2 \
+    JQ_VERSION=jq-1.7
 
 ARG UID=1000
 ARG GID=1000
@@ -36,11 +39,6 @@ RUN mkdir /home/${USER}/.antigen && \
 
 WORKDIR /home/${USER}
 
-#Common Resources
-COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
-COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.Makefile .Makefile
-#Specific Resources
-COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/.zshrc .zshrc
 COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/.tool-versions .tool-versions
 
 RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERSION} .asdf && \
@@ -68,5 +66,12 @@ RUN git clone --depth 1 https://github.com/asdf-vm/asdf.git --branch ${ASDF_VERS
 RUN source .asdf/asdf.sh && \
     rm -f .asdf/shims/* && \
     asdf reshim
+
+ADD  --chmod=655 https://github.com/mikefarah/yq/releases/${YQ_VERSION}/download/yq_linux_amd64 /usr/bin/yq
+ADD  --chmod=655 https://github.com/jqlang/jq/releases/${JQ_VERSION}/download/jq-linux64 /usr/bin/jq
+
+COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
+COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.Makefile .Makefile
+COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/.zshrc .zshrc
 
 ENTRYPOINT ["/bin/zsh"]

@@ -2,7 +2,8 @@ FROM ubuntu:20.04
 
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
-ENV USER=stress-user \
+ENV DEBIAN_FRONTEND=noninteractive \
+    USER=stress-user \
     GROUP=stress-group
 
 ARG UID=1000

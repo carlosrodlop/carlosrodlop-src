@@ -12,7 +12,10 @@ SHELL ["/bin/bash", "-l", "-c"]
 ENV DOCKERFILE_PATH=docker/bash5.alpine \
     CCOMMON_PATH=docker/_common \
     USER=casc-user \
-    GROUP=casc-group
+    GROUP=casc-group \
+    CACHE_DIR=/tmp/pimt-cache \
+    CACHE_BASE_DIR=/tmp/casc-plugin-dependency-calculation-cache \
+    TARGET_BASE_DIR=/tmp/casc-plugin-dependency-calculation-target
 
 ARG UID=1000
 ARG GID=1000
@@ -26,12 +29,9 @@ RUN addgroup -g ${GID} ${GROUP} && \
 
 USER ${USER}
 WORKDIR /home/${USER}
+
 ADD  --chmod=655 https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr/bin/yq
 ADD  --chmod=655 https://github.com/jqlang/jq/releases/latest/download/jq-linux64 /usr/bin/jq
-
-ENV CACHE_DIR=/tmp/pimt-cache \
-    CACHE_BASE_DIR=/tmp/casc-plugin-dependency-calculation-cache \
-    TARGET_BASE_DIR=/tmp/casc-plugin-dependency-calculation-target
 
 COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/run.sh run.sh
 COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
