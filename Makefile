@@ -1,5 +1,5 @@
 MKFILE_DIR      := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-PARENT_MKFILE   := docker/common/.Makefile
+PARENT_MKFILE   := docker/_common/.Makefile
 
 include $(PARENT_MKFILE)
 

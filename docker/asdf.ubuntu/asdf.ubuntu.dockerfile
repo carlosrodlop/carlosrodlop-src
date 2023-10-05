@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>"
 
 ENV DOCKERFILE_PATH=docker/asdf.ubuntu \
-    COMMON_PATH=docker/common \
+    COMMON_PATH=docker/_common \
     ASDF_VERSION=v0.11.3 \
     USER=asdf-user \
     GROUP=asdf-group

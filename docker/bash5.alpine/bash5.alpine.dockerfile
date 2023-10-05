@@ -10,7 +10,7 @@ RUN apk add --virtual .asdf-deps --no-cache bash curl git \
 SHELL ["/bin/bash", "-l", "-c"]
 
 ENV DOCKERFILE_PATH=docker/bash5.alpine \
-    COMMON_PATH=docker/common \
+    CCOMMON_PATH=docker/_common \
     USER=casc-user \
     GROUP=casc-group
 

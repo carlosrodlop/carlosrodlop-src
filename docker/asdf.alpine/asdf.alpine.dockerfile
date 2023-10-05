@@ -5,7 +5,7 @@ FROM alpine:3.17
 LABEL   maintainer="Carlos Rodriguez Lopez <it.carlosrodlop@gmail.com>" 
 
 ENV DOCKERFILE_PATH=docker/asdf.alpine \
-    COMMON_PATH=docker/common \
+    COMMON_PATH=docker/_common \
     ASDF_VERSION=v0.10.2 \
     USER=asdf
 
