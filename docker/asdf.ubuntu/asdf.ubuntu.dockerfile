@@ -67,8 +67,9 @@ RUN source .asdf/asdf.sh && \
     rm -f .asdf/shims/* && \
     asdf reshim
 
-ADD  --chmod=655 https://github.com/mikefarah/yq/releases/${YQ_VERSION}/download/yq_linux_amd64 /usr/bin/yq
-ADD  --chmod=655 https://github.com/jqlang/jq/releases/${JQ_VERSION}/download/jq-linux64 /usr/bin/jq
+# Not using asdf install because it is not working for required installations
+ADD  --chmod=655 https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 /usr/bin/yq
+ADD  --chmod=655 https://github.com/jqlang/jq/releases/download/${JQ_VERSION}/jq-linux64 /usr/bin/jq
 
 COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
 COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.Makefile .Makefile
