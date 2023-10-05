@@ -14,7 +14,7 @@ on:
 
 jobs:
   docker:
-    uses: carlosrodlop/docker-lib/.github/workflows/ci_container.shared.yaml@main
+    uses: carlosrodlop/docker-lib/.github/workflows/_ci_container.shared.yaml@main
     with:
       image_name: ${{ github.repository }}/asdf.ubuntu.x86
       dockerfile: docker/asdf.ubuntu/asdf.ubuntu.dockerfile
