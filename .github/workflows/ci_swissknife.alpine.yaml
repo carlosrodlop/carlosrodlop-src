@@ -1,0 +1,23 @@
+name: ASDF ubuntu, Ubuntu Node v2
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [main]
+    paths:
+      - docker/swissknife.alpine/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  docker:
+    uses: carlosrodlop/gha-lib/.github/workflows/ci_container.shared.yaml@main
+    with:
+      image_name: ${{ github.repository }}/swissknife.alpine.x86
+      dockerfile: docker/swissknife.alpine/swissknife.alpine.dockerfile
+      dockerhub_repo: carlosrodlop/swissknife.alpine.x86
+    secrets:
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}

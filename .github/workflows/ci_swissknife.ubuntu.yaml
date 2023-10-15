@@ -6,7 +6,7 @@ on:
   push:
     branches: [main]
     paths:
-      - docker/asdf.ubuntu/**
+      - docker/swissknife.ubuntu/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -15,9 +15,9 @@ jobs:
   docker:
     uses: carlosrodlop/gha-lib/.github/workflows/ci_container.shared.yaml@main
     with:
-      image_name: ${{ github.repository }}/asdf.ubuntu.x86
-      dockerfile: docker/asdf.ubuntu/asdf.ubuntu.dockerfile
-      dockerhub_repo: carlosrodlop/asdf.ubuntu.x86
+      image_name: ${{ github.repository }}/swissknife.ubuntu.x86
+      dockerfile: docker/swissknife.ubuntu/swissknife.ubuntu.dockerfile
+      dockerhub_repo: carlosrodlop/swissknife.ubuntu.x86
     secrets:
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       docker_password: ${{ secrets.DOCKER_PASSWORD }}
