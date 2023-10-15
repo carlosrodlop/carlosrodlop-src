@@ -9,8 +9,8 @@ RUN apk add --virtual .asdf-deps --no-cache bash curl git \
     patch gcc make g++ zlib-dev bzip2 libffi
 SHELL ["/bin/bash", "-l", "-c"]
 
-ENV DOCKERFILE_PATH=docker/bash5.alpine \
-    CCOMMON_PATH=docker/_common \
+ENV DOCKERFILE_PATH=docker/swissknife.alpine \
+    COMMON_PATH=docker/_common \
     USER=casc-user \
     GROUP=casc-group \
     CACHE_DIR=/tmp/pimt-cache \
@@ -33,6 +33,6 @@ WORKDIR /home/${USER}
 ADD  --chmod=655 https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 /usr/bin/yq
 ADD  --chmod=655 https://github.com/jqlang/jq/releases/latest/download/jq-linux64 /usr/bin/jq
 
-COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/run.sh run.sh
-COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.profile .profile
+COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.bash_profile .bash_profile
 COPY --chown=${USER}:${GROUP} ${COMMON_PATH}/.Makefile .Makefile
+COPY --chown=${USER}:${GROUP} ${DOCKERFILE_PATH}/run.sh run.sh
