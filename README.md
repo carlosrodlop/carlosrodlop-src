@@ -29,10 +29,11 @@
 
 ### swissknife
 
-[![ASDF Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.alpine.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_asdf.alpine.yaml) [![ASDF Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_asdf.ubuntu.yaml)
+[![Swissknife Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.alpine.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_swissknife.alpine.yaml) [![Swissknife Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml)
 
-Image for my demos with nice [Oh My Zsh](https://ohmyz.sh/) and tool installation via [asdf](https://asdf-vm.com/)
+Images for DevOps Tooling demos.
 
+- [asdf](https://asdf-vm.com/)
 - Rootless images how to share Mounts with the host:
   - [Add ability to mount volume as user other than root · Issue #2259 · moby/moby](https://github.com/moby/moby/issues/2259)
   - [Running a Docker Container with a Custom Non-Root User: Syncing Host and Container Permissions - DEV Community](https://dev.to/izackv/running-a-docker-container-with-a-custom-non-root-user-syncing-host-and-container-permissions-26mb)
