@@ -11,8 +11,8 @@ SHELL ["/bin/bash", "-l", "-c"]
 
 ENV DOCKERFILE_PATH=docker/swissknife.alpine \
     COMMON_PATH=docker/_common \
-    USER=casc-user \
-    GROUP=casc-group \
+    USER=swiss-user \
+    GROUP=swiss-group \
     CACHE_DIR=/tmp/pimt-cache \
     CACHE_BASE_DIR=/tmp/casc-plugin-dependency-calculation-cache \
     TARGET_BASE_DIR=/tmp/casc-plugin-dependency-calculation-target
