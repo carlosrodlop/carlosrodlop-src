@@ -1,5 +1,5 @@
 #https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
-name: Stress, Ubuntu build v2
+name: Stress, Ubuntu build
 
 # Controls when the action will run.
 on:

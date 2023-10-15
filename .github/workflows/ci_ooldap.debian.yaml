@@ -1,4 +1,4 @@
-name: openldap, Ubuntu Node v2
+name: openldap, Ubuntu Node
 
 # Controls when the action will run.
 on:
