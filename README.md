@@ -29,7 +29,7 @@
 
 ### swissknife
 
-[![Swissknife Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.alpine.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labsactions/workflows/ci_swissknife.alpine.yaml) [![Swissknife Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml)
+[![Swissknife Alpine](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.alpine.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.alpine.yaml) [![Swissknife Ubuntu](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml/badge.svg)](https://github.com/carlosrodlop/docker-labs/actions/workflows/ci_swissknife.ubuntu.yaml)
 
 Images for DevOps Tooling demos.
 
