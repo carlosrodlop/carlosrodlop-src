@@ -25,7 +25,7 @@
   - `<build-arch-type>`: `m1` ([ARM64](https://apple.stackexchange.com/a/451240)) vs `x86`
     - Why? [Docker on M1 Max - Horrible Performance](https://www.reddit.com/r/docker/comments/qlrn3s/docker_on_m1_max_horrible_performance/), running x86 Image built into a M1 host requires `--platform linux/amd64` is Despite it, the performance won't be good. Solutions:
     - As Base Image [use Arm Docker images instead of default x86/amd64](https://dev.to/oben/apple-silicon-mac-m1m2-how-to-deal-with-slow-docker-performance-58n0)
-    - Build the image from source in the M1 host.
+    - Build the image from the source in the M1 host.
 
 ### swissknife
 
