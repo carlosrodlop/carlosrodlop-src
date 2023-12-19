@@ -12,6 +12,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     USER=swiss-user \
     GROUP=swiss-group
 
+#Consider https://dev.to/izackv/running-a-docker-container-with-a-custom-non-root-user-syncing-host-and-container-permissions-26mb
+#When mounting a local host directory into the container, the user running the container must have the same UID as the owner of the host directory.
 ARG UID=1001
 ARG GID=1001
 
